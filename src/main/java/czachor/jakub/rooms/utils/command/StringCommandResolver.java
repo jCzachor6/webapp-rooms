@@ -1,24 +1,22 @@
 package czachor.jakub.rooms.utils.command;
 
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
+import czachor.jakub.rooms.utils.command.types.TipCommand;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StringCommandResolver {
-    private String line;
+    private Message message;
 
-    public Command resolve(StringCommand stringCommand) {
-        this.line = stringCommand.getLine();
-        Command command = new Command();
-        command.setType(retrieveCommandType());
-        command.setDetails(retrieveDetails());
-        return command;
+    public Command resolve(Message message) {
+        this.message = message;
+        return retrieveSpecificCommand();
     }
 
-    private CommandType retrieveCommandType() {
-        String afterSlash = line.substring(1, line.indexOf(" "));
+    private Command retrieveSpecificCommand() {
+        String afterSlash = message.getLine().substring(1, getIndexOfFirstSpaceOrEnd());
         switch (afterSlash) {
             case "tip":
             case "help":
@@ -26,31 +24,29 @@ public class StringCommandResolver {
             case "?":
             case "??":
             case "???":
-                return CommandType.TIP;
+                return new TipCommand(message.getFrom(), retrieveDetails());
         }
         throw new NoSuchCommandException("Command \'" + afterSlash + "\' doesn't exist");
     }
 
     private List<String> retrieveDetails() {
-        List<String> details = Arrays.asList(line.split("\""));
+        String[] details = message.getLine().split("\"");
         List<String> detailsNoWhitespaces = new ArrayList<>();
-        for (String s : details) {
-            boolean shouldAdd = !isMadeOfWhiteSpaces(s);
+        for (int i = 1 /*ignore first*/; i<details.length; i++) {
+            boolean shouldAdd = !StringUtils.isWhitespace(details[i]);
             if (shouldAdd) {
-                detailsNoWhitespaces.add(s);
+                detailsNoWhitespaces.add(details[i]);
             }
         }
         return detailsNoWhitespaces;
     }
 
-    private boolean isMadeOfWhiteSpaces(String string) {
-        boolean isSpace = false;
-        for (char c : string.toCharArray()) {
-            if (c == ' ') {
-                isSpace = true;
-                break;
-            }
+    private int getIndexOfFirstSpaceOrEnd(){
+        String s = message.getLine();
+        if(s.contains(" ")){
+            return s.indexOf(" ");
+        }else{
+            return s.length();
         }
-        return isSpace;
     }
 }

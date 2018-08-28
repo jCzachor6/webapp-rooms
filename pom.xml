@@ -17,7 +17,6 @@
     </properties>
 
     <dependencies>
-        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -40,6 +39,18 @@
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
             <version>0.25.0.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>5.0.8.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>5.0.8.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -67,7 +78,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- DATABASE -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -98,7 +108,6 @@
             <version>2.1.1</version>
         </dependency>
 
-        <!-- VALIDATION -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -117,7 +126,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- TESTING -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -147,6 +155,12 @@
             <artifactId>json-path-assert</artifactId>
             <version>2.2.0</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8</version>
         </dependency>
 
     </dependencies>

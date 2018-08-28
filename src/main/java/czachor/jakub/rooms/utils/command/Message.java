@@ -3,10 +3,12 @@ package czachor.jakub.rooms.utils.command;
 import lombok.Data;
 
 @Data
-public class StringCommand {
+public class Message {
     private String line;
+    private String from;
 
-    public StringCommand(String line) {
+    public Message(String line, String from) {
         this.line = line;
+        this.from = from;
     }
 }
