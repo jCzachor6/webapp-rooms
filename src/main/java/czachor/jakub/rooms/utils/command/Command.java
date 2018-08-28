@@ -8,23 +8,26 @@ import java.util.List;
 
 @Data
 public abstract class Command {
-    protected CommandType type;
+    private CommandType type;
     protected String author;
     protected List<String> details;
-    protected int MAX_PARAMETERS;
-    protected int MIN_PARAMETERS;
 
     public Command(String author, List<String> details) {
         this.author = author;
         this.details = details;
     }
 
-    protected void throwOnExceedingParameters(){
-        if(details.size()>MAX_PARAMETERS){
-            throw new TooManyCommandParameters("This command requires maximum " + MAX_PARAMETERS + " parameters");
+    private void throwOnExceedingParameters(){
+        if(details.size()>type.getMaxParameters()){
+            throw new TooManyCommandParameters("This command requires maximum " + type.getMaxParameters() + " parameters");
         }
-        if(details.size()<MIN_PARAMETERS){
-            throw new NotEnoughCommandParameters("This command requires minimum " + MIN_PARAMETERS + " parameters");
+        if(details.size()<type.getMinParameters()){
+            throw new NotEnoughCommandParameters("This command requires minimum " + type.getMinParameters() + " parameters");
         }
+    }
+
+    protected void setType(CommandType type) {
+        this.type = type;
+        this.throwOnExceedingParameters();
     }
 }
