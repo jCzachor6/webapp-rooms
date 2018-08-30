@@ -163,6 +163,12 @@
             <version>3.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat7-websocket</artifactId>
+            <version>7.0.90</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
