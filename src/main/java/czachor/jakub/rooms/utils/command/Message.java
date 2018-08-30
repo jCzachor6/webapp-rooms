@@ -8,4 +8,9 @@ import lombok.NoArgsConstructor;
 public class Message {
     private String from;
     private String line;
+
+    public Message(String line, String from) {
+        this.from = from;
+        this.line = line;
+    }
 }
