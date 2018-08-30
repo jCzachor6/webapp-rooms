@@ -1,14 +1,11 @@
 package czachor.jakub.rooms.utils.command;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Message {
-    private String line;
     private String from;
-
-    public Message(String line, String from) {
-        this.line = line;
-        this.from = from;
-    }
+    private String line;
 }

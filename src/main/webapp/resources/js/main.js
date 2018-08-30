@@ -1,20 +1,21 @@
 'use strict';
+var input;
 
-var stompClient = null;
-var username = null;
-connect();
-
-var input = document.getElementById("input");
-input.addEventListener("keyup", function (event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-        if (input.value.length > 0) {
-            sendMessage(input.value);
-            newMessage(input.value);
-            input.value = "";
+function init() {
+    input = document.getElementById("input");
+    input.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            if (input.value.length > 0) {
+                sendMessage(input.value);
+                newMessage(input.value);
+                input.value = "";
+            }
         }
-    }
-});
+    });
+    disconnect();
+    connect();
+}
 
 function newMessage(input) {
     var p = document.createElement("p");
@@ -24,23 +25,29 @@ function newMessage(input) {
     element.appendChild(p);
 }
 
+var stompClient = null;
+
 function connect() {
+    disconnect();
     var socket = new SockJS('/jczachor-web-app-rooms/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/messages', function(messageOutput) {
-            showMessageOutput(JSON.parse(messageOutput.body));
+            newMessage(JSON.parse(messageOutput.body).line);
         });
     });
 }
 
-function sendMessage() {
-    username = "tyry";
-    stompClient.send("app/chat", {},
-        JSON.stringify({'from':username, 'line':input.value}));
+function disconnect() {
+    if(stompClient != null) {
+        stompClient.disconnect();
+    }
+    console.log("Disconnected");
 }
 
-function showMessageOutput(messageOutput) {
-    newMessage(messageOutput.line);
+function sendMessage(line) {
+    var from = "tyry";
+    stompClient.send("/app/chat", {},
+        JSON.stringify({'from':from, 'line':line}));
 }
