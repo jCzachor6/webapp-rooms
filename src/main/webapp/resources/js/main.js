@@ -8,7 +8,6 @@ function init() {
         if (event.keyCode === 13) {
             if (input.value.length > 0) {
                 sendMessage(input.value);
-                newMessage(input.value);
                 input.value = "";
             }
         }

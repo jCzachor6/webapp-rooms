@@ -30,4 +30,6 @@ public abstract class Command {
         this.type = type;
         this.throwOnExceedingParameters();
     }
+
+    public abstract Message process();
 }

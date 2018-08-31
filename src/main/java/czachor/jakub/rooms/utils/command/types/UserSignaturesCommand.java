@@ -6,16 +6,15 @@ import czachor.jakub.rooms.utils.command.Message;
 
 import java.util.List;
 
-public class TipCommand extends Command {
-    public TipCommand(String author, List<String> details) {
+public class UserSignaturesCommand extends Command {
+    public UserSignaturesCommand(String author, List<String> details) {
         super(author, details);
-        setType(CommandType.TIP);
+        setType(CommandType.USER_SIGNATURES);
     }
 
     @Override
     public Message process() {
         //TODO
-        String tip = "Test line 1 \n Test line 2 \n Test line 3";
-        return new Message(tip, author);
+        return null;
     }
 }
