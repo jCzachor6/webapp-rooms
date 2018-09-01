@@ -1,14 +1,35 @@
-package czachor.jakub.rooms.utils.command;
+package czachor.jakub.rooms.service.impl;
 
+import czachor.jakub.rooms.dao.RoomDao;
+import czachor.jakub.rooms.dao.SignatureDao;
+import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
+import czachor.jakub.rooms.service.CommandService;
+import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.command.Message;
 import czachor.jakub.rooms.utils.command.types.*;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringCommandResolver {
+@Service("commandService")
+public class CommandServiceImpl implements CommandService {
+
+    private final RoomDao roomDao;
+    private final SignatureDao signatureDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public CommandServiceImpl(RoomDao roomDao, SignatureDao signatureDao, UserDao userDao) {
+        this.roomDao = roomDao;
+        this.signatureDao = signatureDao;
+        this.userDao = userDao;
+    }
+
+    @Override
     public Command resolve(Message message) {
         return retrieveSpecificCommand(message);
     }
@@ -51,7 +72,7 @@ public class StringCommandResolver {
                 return new UserInfoCommand(author, details);
             case "usersignatures":
             case "user_signatures":
-                return new UserSignaturesCommand(author, details);
+                return new UserSignaturesCommand(author, details, signatureDao);
             case "echo":
                 return new EchoCommand(author, details);
         }
