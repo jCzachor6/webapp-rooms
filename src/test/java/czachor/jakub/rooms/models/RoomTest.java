@@ -8,7 +8,6 @@ public class RoomTest {
         room.setName("name");
         room.setKey("key");
         room.setInfo("info");
-        room.setId(1L);
         return room;
     }
 
