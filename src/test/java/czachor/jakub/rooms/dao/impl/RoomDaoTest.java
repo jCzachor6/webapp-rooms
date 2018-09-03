@@ -38,6 +38,6 @@ public class RoomDaoTest {
         assertEquals("info", room.getInfo());
         assertEquals("name", room.getName());
         assertEquals("key", room.getKey());
-        assertEquals(new Long(1), room.getId());
+        assertEquals(new Long(5), room.getId());
     }
 }
