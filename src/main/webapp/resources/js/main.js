@@ -17,11 +17,14 @@ function init() {
 }
 
 function newMessage(input) {
-    var p = document.createElement("p");
-    var node = document.createTextNode(input);
-    p.appendChild(node);
-    var element = document.getElementById("chat");
-    element.appendChild(p);
+    var split = input.split("\n");
+    split.forEach(line=>{
+        var p = document.createElement("p");
+        var node = document.createTextNode(line);
+        p.appendChild(node);
+        var element = document.getElementById("chat");
+        element.appendChild(p);
+    });
 }
 
 var stompClient = null;
