@@ -27,7 +27,7 @@ public class UserSignaturesCommand extends Command {
         } else {
             StringBuilder line = new StringBuilder(nickname + " signatures: \n");
             for (int i = 0; i < signatures.size(); i++) {
-                buildLine(line, i, signatures.get(i).getContent());
+                buildIndexedLine(line, i, signatures.get(i).getContent());
             }
             return new Message(line.toString(), author);
         }
@@ -39,12 +39,5 @@ public class UserSignaturesCommand extends Command {
         } else {
             return details.get(0);
         }
-    }
-
-    private void buildLine(StringBuilder builder, int index, String content) {
-        builder.append(index + 1);
-        builder.append(". ");
-        builder.append(content);
-        builder.append("\n");
     }
 }

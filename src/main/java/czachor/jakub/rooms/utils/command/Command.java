@@ -31,5 +31,12 @@ public abstract class Command {
         this.throwOnExceedingParameters();
     }
 
+    protected void buildIndexedLine(StringBuilder builder, int index, String content) {
+        builder.append(index + 1);
+        builder.append(". ");
+        builder.append(content);
+        builder.append("\n");
+    }
+
     public abstract Message process();
 }

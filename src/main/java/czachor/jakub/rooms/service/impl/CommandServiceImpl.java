@@ -56,7 +56,7 @@ public class CommandServiceImpl implements CommandService {
             case "all_users":
             case "userslist":
             case "users_list":
-                return new AllUsersCommand(author, details);
+                return new AllUsersCommand(author, details, userDao);
             case "login":
             case "connect":
             case "signin":
@@ -69,7 +69,7 @@ public class CommandServiceImpl implements CommandService {
             case "user":
             case "userinfo":
             case "user_info":
-                return new UserInfoCommand(author, details);
+                return new UserInfoCommand(author, details, userDao);
             case "usersignatures":
             case "user_signatures":
                 return new UserSignaturesCommand(author, details, signatureDao);

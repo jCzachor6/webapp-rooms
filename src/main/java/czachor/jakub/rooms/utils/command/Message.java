@@ -11,8 +11,8 @@ public class Message {
     private String line;
 
     public Message(String line, String from) {
-        this.from = from;
         this.line = line;
+        this.from = from;
     }
 
     public boolean isCommand(){
