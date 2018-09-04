@@ -5,12 +5,13 @@ import czachor.jakub.rooms.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller("roomController")
-@RequestMapping("/room")
+@RequestMapping({"/room", "/r"})
 public class RoomController {
     private final RoomService roomService;
 
@@ -19,8 +20,9 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @RequestMapping(value = "/{key}")
-    public ModelAndView getRoomByKey(@PathVariable("key") String key){
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getRoomByKey(@RequestParam(value = "key", required = true) String key){
+
         RoomDTO roomDTO = roomService.getRoomByKey(key);
         ModelAndView mav = new ModelAndView("room", HttpStatus.OK);
         mav.addObject("room", roomDTO);
