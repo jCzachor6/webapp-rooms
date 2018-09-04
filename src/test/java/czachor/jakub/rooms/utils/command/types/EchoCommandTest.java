@@ -4,7 +4,6 @@ import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.message.Message;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -15,12 +14,12 @@ public class EchoCommandTest {
 
     @Test
     public void extendsCommandTest() {
-        assertThat(new EchoCommand("", Collections.emptyList()), instanceOf(Command.class));
+        assertThat(new EchoCommand("", Collections.singletonList("param")), instanceOf(Command.class));
     }
 
     @Test
     public void processTest() {
-        EchoCommand echoCommand = new EchoCommand("author", Arrays.asList("text"));
+        EchoCommand echoCommand = new EchoCommand("author", Collections.singletonList("text"));
         Message result = echoCommand.process();
         assertEquals("echo: text", result.getLine());
         assertEquals("author", result.getFrom());

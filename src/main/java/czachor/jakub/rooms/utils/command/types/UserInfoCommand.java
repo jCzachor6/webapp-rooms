@@ -19,9 +19,7 @@ public class UserInfoCommand extends Command {
 
     @Override
     public Message process() {
-        User user;
-        String nickname = who();
-        user = userDao.findUserByNickname(author);
+        User user = userDao.findUserByNickname(who());
         if (user != null) {
             return new Message(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints(), author);
         } else {
