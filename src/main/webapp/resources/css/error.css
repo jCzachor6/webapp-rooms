@@ -1,0 +1,18 @@
+
+body {
+    background: gray;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin-top: 120px;
+    color: #ecf0f1;
+    text-shadow: 0px 3px 0px rgba(100, 150, 150, 1);
+}
+
+p {
+    color: rgba(189, 195, 199, 1.0);
+    text-shadow: 0px 3px 0px rgba(100, 150, 150, 1);
+    font-weight: bold;
+}

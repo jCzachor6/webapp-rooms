@@ -7,6 +7,7 @@ insert into ROOMS (id, INFO, KEY, NAME) values (null, 'info1', 'key1', 'name1')
 insert into ROOMS (id, INFO, KEY, NAME) values (null, 'info2', 'key2', 'name2')
 insert into ROOMS (id, INFO, KEY, NAME) values (null, 'info3', 'key3', 'name3')
 insert into ROOMS (id, INFO, KEY, NAME) values (null, 'info4', 'key4', 'name4')
+insert into ROOMS (id, INFO, KEY, NAME) values (null, 'Hello there!', 'global', 'Global room')
 
 insert into SIGNATURES (id, CONTENT, room_id, user_id) values (null, 'content1', 1, 1)
 insert into SIGNATURES (id, CONTENT, room_id, user_id) values (null, 'content1', 2, 1)
