@@ -1,4 +1,4 @@
-package czachor.jakub.rooms.utils.command;
+package czachor.jakub.rooms.utils.message;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

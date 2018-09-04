@@ -1,7 +1,7 @@
 package czachor.jakub.rooms.controller;
 
 import czachor.jakub.rooms.service.CommandService;
-import czachor.jakub.rooms.utils.command.Message;
+import czachor.jakub.rooms.utils.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

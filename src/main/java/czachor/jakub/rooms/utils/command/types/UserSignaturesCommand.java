@@ -4,7 +4,7 @@ import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.command.Message;
+import czachor.jakub.rooms.utils.message.Message;
 
 import java.util.List;
 
@@ -30,14 +30,6 @@ public class UserSignaturesCommand extends Command {
                 buildIndexedLine(line, i, signatures.get(i).getContent());
             }
             return new Message(line.toString(), author);
-        }
-    }
-
-    private String who() {
-        if (details.isEmpty()) {
-            return this.author;
-        } else {
-            return details.get(0);
         }
     }
 }

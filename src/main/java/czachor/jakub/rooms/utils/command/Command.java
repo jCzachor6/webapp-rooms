@@ -2,6 +2,7 @@ package czachor.jakub.rooms.utils.command;
 
 import czachor.jakub.rooms.exceptions.NotEnoughCommandParameters;
 import czachor.jakub.rooms.exceptions.TooManyCommandParameters;
+import czachor.jakub.rooms.utils.message.Message;
 import lombok.Data;
 
 import java.util.List;
@@ -36,6 +37,14 @@ public abstract class Command {
         builder.append(". ");
         builder.append(content);
         builder.append("\n");
+    }
+
+    protected String who() {
+        if (details.isEmpty()) {
+            return this.author;
+        } else {
+            return details.get(0);
+        }
     }
 
     public abstract Message process();

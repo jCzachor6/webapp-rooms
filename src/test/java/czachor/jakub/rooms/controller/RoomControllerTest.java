@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.hamcrest.core.Is.is;
@@ -33,9 +34,15 @@ public class RoomControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".html");
+
         mockMvc = MockMvcBuilders
                 .standaloneSetup(roomController)
                 .setControllerAdvice(new AppControllerAdvice())
+                .setViewResolvers(resolver)
                 .build();
     }
 
@@ -46,7 +53,7 @@ public class RoomControllerTest {
         RoomDTO roomDTO = new RoomAsm().toResource(room);
         when(roomService.getRoomByKey("key")).thenReturn(roomDTO);
 
-        mockMvc.perform(get("/room/{key}", "key"))
+        mockMvc.perform(get("/room?key=key"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("room"))
                 .andExpect(model().attribute("room", hasProperty("name", is("name"))))
@@ -58,7 +65,7 @@ public class RoomControllerTest {
     public void getRoomByKeyExceptionTest() throws Exception {
         when(roomService.getRoomByKey("key")).thenThrow(new RoomDoesNotExistException("exception text"));
 
-        mockMvc.perform(get("/room/{key}", "key"))
+        mockMvc.perform(get("/room").param("key", "key"))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("notfound"))
                 .andExpect(model().attribute("errormessage", "exception text"));

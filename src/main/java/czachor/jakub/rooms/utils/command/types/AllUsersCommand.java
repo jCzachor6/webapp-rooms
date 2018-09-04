@@ -4,7 +4,7 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.command.Message;
+import czachor.jakub.rooms.utils.message.Message;
 
 import java.util.List;
 

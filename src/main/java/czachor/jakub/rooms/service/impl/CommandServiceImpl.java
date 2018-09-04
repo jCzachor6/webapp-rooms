@@ -6,27 +6,27 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
 import czachor.jakub.rooms.service.CommandService;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.Message;
 import czachor.jakub.rooms.utils.command.types.*;
-import org.apache.commons.lang3.StringUtils;
+import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("commandService")
 public class CommandServiceImpl implements CommandService {
-
     private final RoomDao roomDao;
     private final SignatureDao signatureDao;
     private final UserDao userDao;
+    private final MessageDetailsLoader detailsLoader;
 
     @Autowired
     public CommandServiceImpl(RoomDao roomDao, SignatureDao signatureDao, UserDao userDao) {
         this.roomDao = roomDao;
         this.signatureDao = signatureDao;
         this.userDao = userDao;
+        this.detailsLoader = new MessageDetailsLoader();
     }
 
     @Override
@@ -35,8 +35,8 @@ public class CommandServiceImpl implements CommandService {
     }
 
     private Command retrieveSpecificCommand(Message message) {
-        String afterSlash = message.getLine().substring(1, getIndexOfFirstSpaceOrEnd(message));
-        List<String> details = retrieveDetails(message);
+        String afterSlash = message.getLine().substring(1, detailsLoader.getIndexOfFirstSpaceOrEnd(message));
+        List<String> details = detailsLoader.retrieveDetails(message);
         String author = message.getFrom();
         switch (afterSlash.toLowerCase()) {
             case "tip":
@@ -77,26 +77,5 @@ public class CommandServiceImpl implements CommandService {
                 return new EchoCommand(author, details);
         }
         throw new NoSuchCommandException("Command \'" + afterSlash + "\' doesn't exist");
-    }
-
-    private List<String> retrieveDetails(Message message) {
-        String[] details = message.getLine().split("\"");
-        List<String> detailsNoWhitespaces = new ArrayList<>();
-        for (int i = 1 /*ignore first*/; i<details.length; i++) {
-            boolean shouldAdd = !StringUtils.isWhitespace(details[i]);
-            if (shouldAdd) {
-                detailsNoWhitespaces.add(details[i]);
-            }
-        }
-        return detailsNoWhitespaces;
-    }
-
-    private int getIndexOfFirstSpaceOrEnd(Message message){
-        String s = message.getLine();
-        if(s.contains(" ")){
-            return s.indexOf(" ");
-        }else{
-            return s.length();
-        }
     }
 }
