@@ -45,36 +45,36 @@ public class CommandServiceImpl implements CommandService {
             case "?":
             case "??":
             case "???":
-                return new TipCommand(author, details);
+                return new TipCommand(details);
             case "add":
             case "add_signature":
             case "addsignature":
             case "sign":
-                return new AddSignatureCommand(author, details);
+                return new AddSignatureCommand(details);
             case "users":
             case "allusers":
             case "all_users":
             case "userslist":
             case "users_list":
-                return new AllUsersCommand(author, details, userDao);
+                return new AllUsersCommand(details, userDao);
             case "login":
             case "connect":
             case "signin":
             case "sign_in":
-                return new ConnectCommand(author, details);
+                return new ConnectCommand(details);
             case "signatures":
             case "roomsignatures":
             case "room_signatures":
-                return new RoomSignaturesCommand(author, details);
+                return new RoomSignaturesCommand(details);
             case "user":
             case "userinfo":
             case "user_info":
-                return new UserInfoCommand(author, details, userDao);
+                return new UserInfoCommand(details, userDao);
             case "usersignatures":
             case "user_signatures":
-                return new UserSignaturesCommand(author, details, signatureDao);
+                return new UserSignaturesCommand(details, signatureDao);
             case "echo":
-                return new EchoCommand(author, details);
+                return new EchoCommand(details);
         }
         throw new NoSuchCommandException("Command \'" + afterSlash + "\' doesn't exist");
     }

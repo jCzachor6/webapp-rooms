@@ -8,13 +8,13 @@ import java.util.List;
 
 public class AddSignatureCommand extends Command {
 
-    public AddSignatureCommand(String author, List<String> details) {
-        super(author, details);
+    public AddSignatureCommand(List<String> details) {
+        super(details);
         setType(CommandType.ADD_SIGNATURE);
     }
 
     @Override
-    public Message process() {
+    public Message process(String from, String roomkey) {
         //TODO
         return null;
     }

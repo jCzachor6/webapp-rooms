@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum CommandType {
     TIP(0, 0),
-    CONNECT(1,1),
+    CONNECT(0,1),
     USER_SIGNATURES(0, 1),
     ROOM_SIGNATURES(0, 1),
     ADD_SIGNATURE(1, 1),

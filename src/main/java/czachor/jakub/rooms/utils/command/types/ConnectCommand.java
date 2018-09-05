@@ -7,14 +7,14 @@ import czachor.jakub.rooms.utils.message.Message;
 import java.util.List;
 
 public class ConnectCommand extends Command {
-    public ConnectCommand(String author, List<String> details) {
-        super(author, details);
+    public ConnectCommand(List<String> details) {
+        super(details);
         setType(CommandType.CONNECT);
     }
 
     @Override
-    public Message process() {
-        //TODO
-        return null;
+    public Message process(String from, String roomkey) {
+        Message message = new Message("Hello there! " + from, from, roomkey);
+        return message;
     }
 }

@@ -10,11 +10,9 @@ import java.util.List;
 @Data
 public abstract class Command {
     private CommandType type;
-    protected String author;
     protected List<String> details;
 
-    public Command(String author, List<String> details) {
-        this.author = author;
+    public Command(List<String> details) {
         this.details = details;
     }
 
@@ -39,13 +37,5 @@ public abstract class Command {
         builder.append("\n");
     }
 
-    protected String who() {
-        if (details.isEmpty()) {
-            return this.author;
-        } else {
-            return details.get(0);
-        }
-    }
-
-    public abstract Message process();
+    public abstract Message process(String from, String roomkey);
 }

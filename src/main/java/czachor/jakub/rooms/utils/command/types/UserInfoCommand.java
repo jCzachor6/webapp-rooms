@@ -11,19 +11,25 @@ import java.util.List;
 public class UserInfoCommand extends Command {
     private final UserDao userDao;
 
-    public UserInfoCommand(String author, List<String> details, UserDao userDao) {
-        super(author, details);
+    public UserInfoCommand(List<String> details, UserDao userDao) {
+        super(details);
         this.userDao = userDao;
         setType(CommandType.USER_INFO);
     }
 
     @Override
-    public Message process() {
-        User user = userDao.findUserByNickname(who());
-        if (user != null) {
-            return new Message(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints(), author);
+    public Message process(String from, String roomkey) {
+        String nickname;
+        if (details.isEmpty()) {
+            nickname = from;
         } else {
-            return new Message("User \"" + details.get(0) + "\" does't exist. ", author);
+            nickname = details.get(0);
+        }
+        User user = userDao.findUserByNickname(nickname);
+        if (user != null) {
+            return new Message(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints(), from, roomkey);
+        } else {
+            return new Message("User \"" + details.get(0) + "\" does't exist. ", from, roomkey);
         }
     }
 }

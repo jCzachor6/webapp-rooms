@@ -7,14 +7,14 @@ import czachor.jakub.rooms.utils.message.Message;
 import java.util.List;
 
 public class EchoCommand extends Command {
-    public EchoCommand(String author, List<String> details) {
-        super(author, details);
+    public EchoCommand(List<String> details) {
+        super(details);
         setType(CommandType.ECHO);
     }
 
     @Override
-    public Message process() {
+    public Message process(String from, String roomkey) {
         String echo = "echo: " + details.get(0);
-        return new Message(echo, author);
+        return new Message(echo, from, roomkey);
     }
 }

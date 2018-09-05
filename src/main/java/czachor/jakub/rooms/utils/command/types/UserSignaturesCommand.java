@@ -11,25 +11,30 @@ import java.util.List;
 public class UserSignaturesCommand extends Command {
     private SignatureDao signatureDao;
 
-    public UserSignaturesCommand(String author, List<String> details, SignatureDao signatureDao) {
-        super(author, details);
+    public UserSignaturesCommand(List<String> details, SignatureDao signatureDao) {
+        super(details);
         setType(CommandType.USER_SIGNATURES);
         this.signatureDao = signatureDao;
     }
 
     @Override
-    public Message process() {
+    public Message process(String from, String roomkey) {
         List<Signature> signatures;
-        String nickname = who();
-        signatures = signatureDao.getSignaturesByUserNickname(who());
+        String nickname;
+        if (details.isEmpty()) {
+            nickname = from;
+        } else {
+            nickname = details.get(0);
+        }
+        signatures = signatureDao.getSignaturesByUserNickname(nickname);
         if (signatures.isEmpty()) {
-            return new Message("User " + nickname + " didn't leave any signatures.", author);
+            return new Message("User " + nickname + " didn't leave any signatures.", from, roomkey);
         } else {
             StringBuilder line = new StringBuilder(nickname + " signatures: \n");
             for (int i = 0; i < signatures.size(); i++) {
                 buildIndexedLine(line, i, signatures.get(i).getContent());
             }
-            return new Message(line.toString(), author);
+            return new Message(line.toString(), from, roomkey);
         }
     }
 }
