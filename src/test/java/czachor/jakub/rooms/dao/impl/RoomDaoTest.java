@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = HibernateConfig.class)
@@ -38,6 +38,5 @@ public class RoomDaoTest {
         assertEquals("info", room.getInfo());
         assertEquals("name", room.getName());
         assertEquals("key", room.getKey());
-        assertEquals(new Long(5), room.getId());
     }
 }

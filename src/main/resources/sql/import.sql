@@ -21,3 +21,5 @@ insert into SIGNATURES (id, CONTENT, room_id, user_id) values (null, 'content1',
 insert into SIGNATURES (id, CONTENT, room_id, user_id) values (null, 'content1', 3, 3)
 insert into SIGNATURES (id, CONTENT, room_id, user_id) values (null, 'content1', 4, 3)
 
+insert into STATISTIC (id, NAME, STRING_VALUE, INT_VALUE) values (null, 'ACTIVE_USERS', null, 0)
+insert into STATISTIC (id, NAME, STRING_VALUE, INT_VALUE) values (null, 'TOTAL_USERS', null, 0)

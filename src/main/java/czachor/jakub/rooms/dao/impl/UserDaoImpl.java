@@ -7,7 +7,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -28,12 +27,6 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 
     @Override
     public List<User> getUsers() {
-        Query query = createQuery("from User");
-        List list = query.getResultList();
-        if(list != null){
-            return list;
-        }else{
-            return Collections.emptyList();
-        }
+        return getAll();
     }
 }
