@@ -6,7 +6,10 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
 import czachor.jakub.rooms.service.CommandService;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.types.*;
+import czachor.jakub.rooms.utils.command.types.ConnectCommand;
+import czachor.jakub.rooms.utils.command.types.EchoCommand;
+import czachor.jakub.rooms.utils.command.types.RollCommand;
+import czachor.jakub.rooms.utils.command.types.TipCommand;
 import czachor.jakub.rooms.utils.message.Message;
 import czachor.jakub.rooms.utils.message.MessageDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,35 +49,37 @@ public class CommandServiceImpl implements CommandService {
             case "??":
             case "???":
                 return new TipCommand(details);
-            case "add":
+/*            case "add":
             case "add_signature":
             case "addsignature":
             case "sign":
-                return new AddSignatureCommand(details);
-            case "users":
+                return new AddSignatureCommand(details);*/
+/*            case "users":
             case "allusers":
             case "all_users":
             case "userslist":
             case "users_list":
-                return new AllUsersCommand(details, userDao);
+                return new AllUsersCommand(details, userDao);*/
             case "login":
             case "connect":
             case "signin":
             case "sign_in":
                 return new ConnectCommand(details);
-            case "signatures":
+/*            case "signatures":
             case "roomsignatures":
             case "room_signatures":
-                return new RoomSignaturesCommand(details);
-            case "user":
+                return new RoomSignaturesCommand(details);*/
+/*            case "user":
             case "userinfo":
             case "user_info":
-                return new UserInfoCommand(details, userDao);
-            case "usersignatures":
+                return new UserInfoCommand(details, userDao);*/
+/*            case "usersignatures":
             case "user_signatures":
-                return new UserSignaturesCommand(details, signatureDao);
+                return new UserSignaturesCommand(details, signatureDao);*/
             case "echo":
                 return new EchoCommand(details);
+            case "roll":
+                return new RollCommand(details);
         }
         throw new NoSuchCommandException("Command \'" + afterSlash + "\' doesn't exist");
     }

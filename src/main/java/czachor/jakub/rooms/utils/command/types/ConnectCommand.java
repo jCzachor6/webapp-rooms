@@ -17,7 +17,7 @@ public class ConnectCommand extends Command {
     @Override
     public Message process(String from, String roomkey) {
         Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.JOIN);
-        message.setLine("Hello there! " + from + "\n Type '/?' to see possible commands. ");
+        message.setLine("Hello there! " + from + "\n Type '/help' to see possible commands. ");
         return message;
     }
 }

@@ -7,22 +7,22 @@ import czachor.jakub.rooms.utils.message.Message;
 import czachor.jakub.rooms.utils.message.MessageType;
 
 import java.util.List;
+import java.util.Random;
 
-public class TipCommand extends Command {
-    public TipCommand(List<String> details) {
+public class RollCommand extends Command {
+
+    public RollCommand(List<String> details) {
         super(details);
-        setType(CommandType.TIP);
+        setType(CommandType.USER_SIGNATURES);
     }
 
     @Override
     public Message process(String from, String roomkey) {
-        StringBuilder tip = new StringBuilder("List of commands: ");
-        Consts.workingCommands.forEach(s -> {
-            tip.append("\n");
-            tip.append(s);
-        });
-        Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.COMMAND);
-        message.setLine(tip.toString());
+        Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.SPECIAL);
+        Random generator = new Random();
+        int max = 100;
+        int rolled = generator.nextInt(max);
+        message.setLine("Rolled " + rolled + " out of " + max);
         return message;
     }
 }
