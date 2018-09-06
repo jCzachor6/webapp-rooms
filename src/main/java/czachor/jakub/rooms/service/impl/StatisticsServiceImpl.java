@@ -6,6 +6,7 @@ import czachor.jakub.rooms.models.dto.StatisticsDTO;
 import czachor.jakub.rooms.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,21 +39,26 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
+    @Transactional
     public void incrementActiveUsers() {
         Statistics statistics = statisticsDao.getActiveUsersStat();
-        statistics.setIntValue(statistics.getIntValue() + 1);
+        int current = statistics.getIntValue();
+        statistics.setIntValue(current + 1);
     }
 
     @Override
+    @Transactional
     public void decrementActiveUsers() {
         Statistics statistics = statisticsDao.getActiveUsersStat();
-        statistics.setIntValue(statistics.getIntValue() - 1);
-    }
+        int current = statistics.getIntValue();
+        statistics.setIntValue(current - 1);    }
 
     @Override
+    @Transactional
     public void incrementTotalJoinedUsers() {
         Statistics statistics = statisticsDao.getTotalUsersJoinedStat();
-        statistics.setIntValue(statistics.getIntValue() + 1);
+        int current = statistics.getIntValue();
+        statistics.setIntValue(current + 1);
     }
 
     @Override

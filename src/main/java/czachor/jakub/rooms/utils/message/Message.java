@@ -17,7 +17,7 @@ public class Message {
         this.from = from;
     }
 
-    public Message(String from, String line, String room) {
+    public Message(String line, String from, String room) {
         this.from = from;
         this.line = line;
         this.roomKey = room;

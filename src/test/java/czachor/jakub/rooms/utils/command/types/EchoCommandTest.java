@@ -14,13 +14,13 @@ public class EchoCommandTest {
 
     @Test
     public void extendsCommandTest() {
-        assertThat(new EchoCommand("", Collections.singletonList("param")), instanceOf(Command.class));
+        assertThat(new EchoCommand(Collections.singletonList("param")), instanceOf(Command.class));
     }
 
     @Test
     public void processTest() {
-        EchoCommand echoCommand = new EchoCommand("author", Collections.singletonList("text"));
-        Message result = echoCommand.process();
+        EchoCommand echoCommand = new EchoCommand(Collections.singletonList("text"));
+        Message result = echoCommand.process("author", "roomkey");
         assertEquals("echo: text", result.getLine());
         assertEquals("author", result.getFrom());
     }

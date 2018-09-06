@@ -33,10 +33,10 @@ function connect() {
 }
 
 function onConnected() {
-    var topic = '/app/chat/' + roomKey;
     if (currentSubscription) {
         currentSubscription.unsubscribe();
     }
+    var topic = '/app/chat/' + roomKey;
     currentSubscription = stompClient.subscribe('/room/' + roomKey, onMessageReceived);
     stompClient.send(topic, {}, JSON.stringify({from: nickname, line: '/connect', roomKey: roomKey}));
 }
