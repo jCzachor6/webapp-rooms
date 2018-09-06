@@ -27,7 +27,7 @@ public class RoomServiceImpl implements RoomService {
         if(found != null){
             return roomAsm.toResource(found);
         }else {
-            throw new RoomDoesNotExistException("Room with given key(" + key + ") doesn't exist");
+            throw new RoomDoesNotExistException("Room with given key (" + key + ") doesn't exist");
         }
     }
 }

@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<h2>BETA 0.1</h2>
+<head>
+    <meta charset="utf-8"/>
+    <title>App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="resources/js/utils.js"></script>
+    <script src="resources/js/main.js"></script>
+    <link rel="stylesheet" href="resources/css/main.css"/>
+</head>
+<body onload="init()">
+
+<div class="container">
+    <div class="header">
+        <span th:text="${room.name}"></span>
+    </div>
+    <div class="chat-container">
+        <ul class="chat" id="chat"></ul>
+    </div>
+    <input type="text" placeholder="Type text & hit enter" maxlength="100" id="input">
+</div>
+
+</body>
+</html>

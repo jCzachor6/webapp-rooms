@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
+import java.util.List;
 
 @Transactional
 public abstract class AbstractDao<PK extends Serializable, T extends Serializable> {
@@ -45,11 +47,21 @@ public abstract class AbstractDao<PK extends Serializable, T extends Serializabl
         getSession().delete(entity);
     }
 
-    protected Query createQuery(String hql){
+    protected Query createQuery(String hql) {
         return getSession().createQuery(hql);
     }
 
-    public void deleteAll(){
-        createQuery("delete from "+persistentClass.getSimpleName()).executeUpdate();
+    public void deleteAll() {
+        createQuery("delete from " + persistentClass.getSimpleName()).executeUpdate();
+    }
+
+    public List<T> getAll() {
+        Query query = createQuery("from " + persistentClass.getSimpleName());
+        List list = query.getResultList();
+        if (list != null) {
+            return list;
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
