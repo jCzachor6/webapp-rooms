@@ -22,9 +22,6 @@ public class Message {
 
     @JsonIgnore
     public boolean isCommand() {
-        if (!StringUtils.isEmpty(line)) {
-            return line.charAt(0) == '/';
-        }
-        return false;
+        return !StringUtils.isEmpty(line) && line.charAt(0) == '/';
     }
 }

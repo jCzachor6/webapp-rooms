@@ -16,7 +16,7 @@ public class MessageTest {
     }
 
     @Test
-    public void isTrueFalseTest() {
+    public void isCommandTrueTest() {
         Message message = new Message();
         message.setLine("/command");
         assertTrue(message.isCommand());
