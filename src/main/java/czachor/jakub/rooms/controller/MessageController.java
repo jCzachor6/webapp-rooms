@@ -3,6 +3,7 @@ package czachor.jakub.rooms.controller;
 import czachor.jakub.rooms.service.CommandService;
 import czachor.jakub.rooms.service.StatisticsService;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -35,6 +36,7 @@ public class MessageController {
             returnMessage = commandService.resolve(message).process(message.getFrom(), roomKey);
         } else {
             returnMessage = message;
+            returnMessage.setType(MessageType.NORMAL);
         }
         messagingTemplate.convertAndSend(String.format("/room/%s", roomKey), returnMessage);
     }

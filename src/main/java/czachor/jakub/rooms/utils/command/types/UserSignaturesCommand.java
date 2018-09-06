@@ -1,10 +1,12 @@
 package czachor.jakub.rooms.utils.command.types;
 
+import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageType;
 
 import java.util.List;
 
@@ -26,15 +28,17 @@ public class UserSignaturesCommand extends Command {
         } else {
             nickname = details.get(0);
         }
+        Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.COMMAND);
         signatures = signatureDao.getSignaturesByUserNickname(nickname);
         if (signatures.isEmpty()) {
-            return new Message("User " + nickname + " didn't leave any signatures.", from, roomkey);
+            message.setLine("User " + nickname + " didn't leave any signatures.");
         } else {
             StringBuilder line = new StringBuilder(nickname + " signatures: \n");
             for (int i = 0; i < signatures.size(); i++) {
                 buildIndexedLine(line, i, signatures.get(i).getContent());
             }
-            return new Message(line.toString(), from, roomkey);
+            message.setLine(line.toString());
         }
+        return message;
     }
 }

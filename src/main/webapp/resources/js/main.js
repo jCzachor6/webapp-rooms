@@ -15,12 +15,14 @@ function init() {
     connect();
 }
 
-function newMessage(input) {
-    var split = input.split("\n");
+function newMessage(message) {
+    var author = message.from;
+    var split = message.line.split("\n");
     split.forEach(line => {
         var p = document.createElement("p");
-        var node = document.createTextNode(line);
+        var node = document.createTextNode(author + ': ' + line);
         p.appendChild(node);
+        p.style.color = message.type.color;
         var element = document.getElementById("chat");
         element.appendChild(p);
     });
@@ -42,12 +44,17 @@ function onConnected() {
 }
 
 function onError(error) {
-    newMessage('Could not connect to WebSocket server. Please refresh this page to try again!')
+    var message = {
+        line:'Could not connect to WebSocket server. Please refresh this page to try again!',
+        from:'error: ',
+        room:roomKey
+    };
+    newMessage(message)
 }
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
-    newMessage(message.line)
+    newMessage(message)
 }
 
 function disconnect() {

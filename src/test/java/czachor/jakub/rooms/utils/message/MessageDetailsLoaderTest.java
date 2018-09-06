@@ -12,7 +12,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void retrieveDetailsTest() {
         String line = "/command \"det1\" \"det2\" \"det3\"";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         List<String> details = new MessageDetailsLoader().retrieveDetails(message);
         assertEquals(3, details.size());
         assertEquals("det1", details.get(0));
@@ -23,7 +24,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void retrieveDetailsEmptyTest() {
         String line = "/command";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         List<String> details = new MessageDetailsLoader().retrieveDetails(message);
         assertTrue(details.isEmpty());
     }
@@ -31,7 +33,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void retrieveDetailsBackslashTest() {
         String line = "/";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         List<String> details = new MessageDetailsLoader().retrieveDetails(message);
         assertTrue(details.isEmpty());
     }
@@ -39,7 +42,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void retrieveDetailsOnlyQuotesTest() {
         String line = "/\"    \"   \" \"\"  ";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         List<String> details = new MessageDetailsLoader().retrieveDetails(message);
         assertTrue(details.isEmpty());
     }
@@ -47,7 +51,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void getIndexOfFirstSpaceTest() {
         String line = "/command \"det1\" \"det2\" \"det3\"";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         int index = new MessageDetailsLoader().getIndexOfFirstSpaceOrEnd(message);
         assertEquals(8, index);
     }
@@ -55,7 +60,8 @@ public class MessageDetailsLoaderTest {
     @Test
     public void getIndexOfEndTest() {
         String line = "/command";
-        Message message = new Message(line, "author");
+        Message message = new Message();
+        message.setLine(line);
         int index = new MessageDetailsLoader().getIndexOfFirstSpaceOrEnd(message);
         assertEquals(8, index);
     }

@@ -11,16 +11,13 @@ public class Message {
     private String from;
     private String line;
     private String roomKey;
+    private MessageType type;
 
-    public Message(String line, String from) {
-        this.line = line;
+    public Message(String from, String roomKey, MessageType type) {
+        this.line = "";
         this.from = from;
-    }
-
-    public Message(String line, String from, String room) {
-        this.from = from;
-        this.line = line;
-        this.roomKey = room;
+        this.roomKey = roomKey;
+        this.type = type;
     }
 
     @JsonIgnore
