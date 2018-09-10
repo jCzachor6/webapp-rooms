@@ -10,8 +10,7 @@ import java.util.List;
 
 public class EchoCommand extends Command {
     public EchoCommand(List<String> details) {
-        super(details);
-        setType(CommandType.ECHO);
+        super(CommandType.ECHO, details);
     }
 
     @Override

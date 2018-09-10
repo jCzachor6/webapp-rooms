@@ -10,8 +10,7 @@ import java.util.List;
 
 public class ConnectCommand extends Command {
     public ConnectCommand(List<String> details) {
-        super(details);
-        setType(CommandType.CONNECT);
+        super(CommandType.CONNECT, details);
     }
 
     @Override

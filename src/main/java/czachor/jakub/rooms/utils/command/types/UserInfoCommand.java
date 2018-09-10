@@ -14,9 +14,8 @@ public class UserInfoCommand extends Command {
     private final UserDao userDao;
 
     public UserInfoCommand(List<String> details, UserDao userDao) {
-        super(details);
+        super(CommandType.USER_INFO, details);
         this.userDao = userDao;
-        setType(CommandType.USER_INFO);
     }
 
     @Override

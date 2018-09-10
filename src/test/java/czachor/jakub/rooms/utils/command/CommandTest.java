@@ -15,8 +15,7 @@ public class CommandTest {
 
     class A extends Command {
         public A(List<String> details) {
-            super(details);
-            setType(CommandType.ECHO);
+            super(CommandType.ECHO, details);
         }
 
         @Override

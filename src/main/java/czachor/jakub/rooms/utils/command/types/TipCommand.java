@@ -10,8 +10,7 @@ import java.util.List;
 
 public class TipCommand extends Command {
     public TipCommand(List<String> details) {
-        super(details);
-        setType(CommandType.TIP);
+        super(CommandType.TIP, details);
     }
 
     @Override

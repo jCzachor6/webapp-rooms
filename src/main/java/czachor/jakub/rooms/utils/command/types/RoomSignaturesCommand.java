@@ -8,8 +8,7 @@ import java.util.List;
 
 public class RoomSignaturesCommand extends Command {
     public RoomSignaturesCommand(List<String> details) {
-        super(details);
-        setType(CommandType.ROOM_SIGNATURES);
+        super(CommandType.ROOM_SIGNATURES, details);
     }
 
     @Override

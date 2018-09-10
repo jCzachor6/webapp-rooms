@@ -9,8 +9,7 @@ import java.util.List;
 public class AddSignatureCommand extends Command {
 
     public AddSignatureCommand(List<String> details) {
-        super(details);
-        setType(CommandType.ADD_SIGNATURE);
+        super(CommandType.ADD_SIGNATURE, details);
     }
 
     @Override

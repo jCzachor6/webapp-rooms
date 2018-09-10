@@ -14,8 +14,7 @@ public class UserSignaturesCommand extends Command {
     private SignatureDao signatureDao;
 
     public UserSignaturesCommand(List<String> details, SignatureDao signatureDao) {
-        super(details);
-        setType(CommandType.USER_SIGNATURES);
+        super(CommandType.USER_SIGNATURES, details);
         this.signatureDao = signatureDao;
     }
 

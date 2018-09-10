@@ -16,8 +16,7 @@ public class RollCommand extends Command {
     int rolled;
 
     public RollCommand(List<String> details) {
-        super(details);
-        setType(CommandType.USER_SIGNATURES);
+        super(CommandType.USER_SIGNATURES, details);
     }
 
     @Override

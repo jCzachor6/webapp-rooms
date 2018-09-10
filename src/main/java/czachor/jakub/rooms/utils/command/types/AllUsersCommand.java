@@ -14,9 +14,8 @@ public class AllUsersCommand extends Command {
     private final UserDao userDao;
 
     public AllUsersCommand(List<String> details, UserDao userDao) {
-        super(details);
+        super(CommandType.ALL_USERS, details);
         this.userDao = userDao;
-        setType(CommandType.ALL_USERS);
     }
 
     @Override
