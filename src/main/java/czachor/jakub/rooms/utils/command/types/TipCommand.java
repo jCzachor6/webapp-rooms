@@ -16,7 +16,7 @@ public class TipCommand extends Command {
     @Override
     public Message process(String from, String roomkey) {
         StringBuilder tip = new StringBuilder("List of commands: ");
-        Consts.workingCommands.forEach(s -> {
+        Consts.WORKING_COMMANDS.forEach(s -> {
             tip.append("\n");
             tip.append(s);
         });

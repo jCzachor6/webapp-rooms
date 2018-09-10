@@ -5,9 +5,10 @@ import java.util.List;
 
 public interface Consts {
     public static final String BOT_NAME = "Chat bot";
-    public static final List<String> workingCommands = Arrays.asList(
+    public static final List<String> WORKING_COMMANDS = Arrays.asList(
             "/help - show list of commands. ",
             "/echo \"text\" - get echo. ",
             "/roll - get random value from 0-100. "
     );
+    public static final String NEW_USER_NAME = "anon";
 }

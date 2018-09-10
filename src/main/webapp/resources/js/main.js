@@ -87,8 +87,7 @@ function loadInput() {
 
 function loadNickname() {
     var client = new HttpClient();
-    client.get('http://localhost:8081/jczachor-web-app-rooms/stat/total', function (response) {
-        var stat = JSON.parse(response);
-        nickname = 'anon' + stat.value;
+    client.get('http://localhost:8081/jczachor-web-app-rooms/stat/newuser', function (response) {
+        nickname = response;
     });
 }

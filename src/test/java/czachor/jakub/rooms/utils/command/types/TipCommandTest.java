@@ -23,7 +23,7 @@ public class TipCommandTest {
     public void processTest() {
         TipCommand command = new TipCommand(Collections.emptyList());
         Message message = command.process("author", "key");
-        assertEquals(Consts.workingCommands.size(), StringUtils.countMatches(message.getLine(), "\n"));
+        assertEquals(Consts.WORKING_COMMANDS.size(), StringUtils.countMatches(message.getLine(), "\n"));
         assertEquals(Consts.BOT_NAME, message.getFrom());
     }
 }
