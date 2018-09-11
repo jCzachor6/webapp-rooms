@@ -10,7 +10,6 @@ var roomKey;
 function init() {
     loadRoomKey();
     loadInput();
-    loadNickname();
     disconnect();
     connect();
 }
@@ -73,7 +72,7 @@ function loadRoomKey() {
 
 function sendMessage(value) {
     var topic = '/app/chat/' + roomKey;
-    stompClient.send(topic, {}, JSON.stringify({from: nickname, line: value, roomKey: roomKey}));
+    stompClient.send(topic, {}, JSON.stringify({line: value, roomKey: roomKey}));
 }
 
 function loadInput() {
@@ -86,12 +85,5 @@ function loadInput() {
                 input.value = "";
             }
         }
-    });
-}
-
-function loadNickname() {
-    var client = new HttpClient();
-    client.get('http://localhost:8081/jczachor-web-app-rooms/stat/newuser', function (response) {
-        nickname = response;
     });
 }

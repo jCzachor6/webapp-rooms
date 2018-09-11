@@ -11,4 +11,5 @@ public interface StatisticsService {
     void decrementActiveUsers();
     void incrementTotalJoinedUsers();
     List<StatisticsDTO> getAllStatistics();
+    String generateUsername();
 }

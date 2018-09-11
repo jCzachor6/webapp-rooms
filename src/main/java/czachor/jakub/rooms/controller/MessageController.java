@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
@@ -30,13 +31,17 @@ public class MessageController {
 
     @MessageMapping("/chat/{roomkey}")
     public void send(@DestinationVariable(value = "roomkey") String roomKey,
-                     @Payload Message message) {
+                     @Payload Message message,
+                     SimpMessageHeaderAccessor headerAccessor) {
+
+        String nickname = headerAccessor.getSessionAttributes().get("nickname").toString();
         Message returnMessage;
         if (message.isCommand()) {
-            returnMessage = commandService.resolve(message).process(message.getFrom(), roomKey);
+            returnMessage = commandService.resolve(message).process(nickname, roomKey);
         } else {
             returnMessage = message;
             returnMessage.setType(MessageType.NORMAL);
+            returnMessage.setFrom(nickname);
         }
         messagingTemplate.convertAndSend(String.format("/room/%s", roomKey), returnMessage);
     }

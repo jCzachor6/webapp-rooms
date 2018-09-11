@@ -1,6 +1,5 @@
 package czachor.jakub.rooms.controller;
 
-import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.models.dto.StatisticsDTO;
 import czachor.jakub.rooms.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class StatisticsController {
 
     @RequestMapping(value = "/newuser", method = RequestMethod.GET)
     ResponseEntity<String> getNewUsername(){
-        String username = Consts.NEW_USER_NAME + statisticsService.getTotalUsersJoined().getValue();
+        String username = statisticsService.generateUsername();
         return new ResponseEntity<>(username, HttpStatus.OK);
     }
 }

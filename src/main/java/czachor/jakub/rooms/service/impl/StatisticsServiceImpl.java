@@ -1,5 +1,6 @@
 package czachor.jakub.rooms.service.impl;
 
+import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.models.Statistics;
 import czachor.jakub.rooms.models.dto.StatisticsDTO;
@@ -51,7 +52,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     public void decrementActiveUsers() {
         Statistics statistics = statisticsDao.getActiveUsersStat();
         int current = statistics.getIntValue();
-        statistics.setIntValue(current - 1);    }
+        statistics.setIntValue(current - 1);
+    }
 
     @Override
     @Transactional
@@ -76,5 +78,12 @@ public class StatisticsServiceImpl implements StatisticsService {
             dtoStats.add(dto);
         }
         return dtoStats;
+    }
+
+    @Override
+    public String generateUsername() {
+        int number = statisticsDao.getTotalUsersJoinedStat().getIntValue();
+        String suffix = String.valueOf(number);
+        return Consts.NEW_USER_NAME + suffix;
     }
 }
