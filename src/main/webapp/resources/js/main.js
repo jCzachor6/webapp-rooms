@@ -44,10 +44,14 @@ function onConnected() {
 }
 
 function onError(error) {
+    var red = {
+        color: '#d11f1f'
+    };
     var message = {
-        line:'Could not connect to WebSocket server. Please refresh this page to try again!',
-        from:'error: ',
-        room:roomKey
+        line: 'Could not connect to WebSocket server. Please refresh this page to try again!',
+        from: 'error: ',
+        room: roomKey,
+        type: red
     };
     newMessage(message)
 }
