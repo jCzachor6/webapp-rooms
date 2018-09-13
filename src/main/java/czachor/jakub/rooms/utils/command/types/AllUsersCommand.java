@@ -6,6 +6,7 @@ import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 import czachor.jakub.rooms.utils.message.MessageType;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class AllUsersCommand extends Command {
     }
 
     @Override
-    public Message process(String from, String roomkey) {
+    public Message process(MessageProcessHelper helper) {
         List<User> users = userDao.getUsers();
-        Message returnMessage = new Message(Consts.BOT_NAME, roomkey, MessageType.COMMAND);
+        Message returnMessage = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         if (users.isEmpty()) {
             returnMessage.setLine("No users in database. ");
             return returnMessage;

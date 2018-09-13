@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public interface Consts {
-    public static final String BOT_NAME = "Chat bot";
-    public static final List<String> WORKING_COMMANDS = Arrays.asList(
+    String BOT_NAME = "Chat bot";
+    List<String> WORKING_COMMANDS = Arrays.asList(
             "/help - show list of commands. ",
             "/echo \"text\" - get echo. ",
             "/roll - get random value from 0-100. "
     );
-    public static final String NEW_USER_NAME = "anon";
+    String NEW_USER_NAME = "anon";
+
+    //session attribute names
+    String S_NICKNAME = "nickname";
+    String S_GENERATED = "isGenerated";
 }

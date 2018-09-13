@@ -2,14 +2,15 @@ package czachor.jakub.rooms.controller;
 
 import czachor.jakub.rooms.service.CommandService;
 import czachor.jakub.rooms.service.StatisticsService;
+import czachor.jakub.rooms.utils.CustomPrincipal;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 import czachor.jakub.rooms.utils.message.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
@@ -31,19 +32,23 @@ public class MessageController {
 
     @MessageMapping("/chat/{roomkey}")
     public void send(@DestinationVariable(value = "roomkey") String roomKey,
-                     @Payload Message message,
-                     SimpMessageHeaderAccessor headerAccessor) {
+                     @Payload Message original,
+                     @Autowired CustomPrincipal principal) {
+        MessageProcessHelper helper = new MessageProcessHelper(principal, roomKey);
 
-        String nickname = headerAccessor.getSessionAttributes().get("nickname").toString();
         Message returnMessage;
-        if (message.isCommand()) {
-            returnMessage = commandService.resolve(message).process(nickname, roomKey);
+        if (original.isCommand()) {
+            returnMessage = commandService.resolve(original).process(helper);
         } else {
-            returnMessage = message;
-            returnMessage.setType(MessageType.NORMAL);
-            returnMessage.setFrom(nickname);
+            returnMessage = buildNormalMessage(original, helper);
         }
         messagingTemplate.convertAndSend(String.format("/room/%s", roomKey), returnMessage);
+    }
+
+    private Message buildNormalMessage(Message edit, MessageProcessHelper helper) {
+        edit.setType(MessageType.NORMAL);
+        edit.setFrom(helper.getNickname());
+        return edit;
     }
 
     @EventListener

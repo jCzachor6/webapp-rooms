@@ -12,11 +12,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 @ComponentScan
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    private final HttpHandshakeInterceptor interceptor;
+    private final HandshakeHandler handshakeHandler;
 
     @Autowired
-    public WebSocketConfig(HttpHandshakeInterceptor interceptor) {
-        this.interceptor = interceptor;
+    public WebSocketConfig(HandshakeHandler interceptor) {
+        this.handshakeHandler = interceptor;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .addInterceptors(interceptor)
+                .setHandshakeHandler(handshakeHandler)
                 .withSockJS();
     }
 }

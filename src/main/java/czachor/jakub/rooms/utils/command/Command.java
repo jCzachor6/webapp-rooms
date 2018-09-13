@@ -3,6 +3,7 @@ package czachor.jakub.rooms.utils.command;
 import czachor.jakub.rooms.exceptions.NotEnoughCommandParameters;
 import czachor.jakub.rooms.exceptions.TooManyCommandParameters;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 
 import java.util.List;
 
@@ -32,5 +33,5 @@ public abstract class Command {
         builder.append("\n");
     }
 
-    public abstract Message process(String from, String roomkey);
+    public abstract Message process(MessageProcessHelper helper);
 }

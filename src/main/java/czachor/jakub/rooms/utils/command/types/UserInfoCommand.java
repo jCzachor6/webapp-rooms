@@ -6,6 +6,7 @@ import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 import czachor.jakub.rooms.utils.message.MessageType;
 
 import java.util.List;
@@ -19,15 +20,15 @@ public class UserInfoCommand extends Command {
     }
 
     @Override
-    public Message process(String from, String roomkey) {
+    public Message process(MessageProcessHelper helper) {
         String nickname;
         if (details.isEmpty()) {
-            nickname = from;
+            nickname = helper.getNickname();
         } else {
             nickname = details.get(0);
         }
         User user = userDao.findUserByNickname(nickname);
-        Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.COMMAND);
+        Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         if (user != null) {
             message.setLine(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints());
         } else {

@@ -1,6 +1,5 @@
 package czachor.jakub.rooms.controller;
 
-import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.models.dto.StatisticsDTO;
 import czachor.jakub.rooms.service.StatisticsService;
 import org.junit.Before;
@@ -68,12 +67,9 @@ public class StatisticsControllerTest {
 
     @Test
     public void getNewUsernameTest() throws Exception {
-        StatisticsDTO stat1 = new StatisticsDTO();
-        stat1.setName("stat1");
-        stat1.setValue("1");
-        when(service.getTotalUsersJoined()).thenReturn(stat1);
+        when(service.generateUsername()).thenReturn("anon0");
         mockMvc.perform(get("/stat/newuser"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(Consts.NEW_USER_NAME+"1"));
+                .andExpect(content().string("anon0"));
     }
 }
