@@ -42,7 +42,16 @@ public class MessageController {
         } else {
             returnMessage = buildNormalMessage(original, helper);
         }
-        messagingTemplate.convertAndSend(String.format("/room/%s", roomKey), returnMessage);
+
+        String targetName = helper.getDestination().getTargetName();
+        switch (helper.getDestination().getTarget()) {
+            case ROOM:
+                messagingTemplate.convertAndSend(String.format("/room/%s", targetName), returnMessage);
+                break;
+            case USER:
+                messagingTemplate.convertAndSendToUser(targetName, String.format("/room/%s", roomKey), returnMessage);
+                break;
+        }
     }
 
     private Message buildNormalMessage(Message edit, MessageProcessHelper helper) {

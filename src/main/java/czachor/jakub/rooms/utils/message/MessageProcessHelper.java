@@ -21,4 +21,10 @@ public class MessageProcessHelper {
     public String getNickname(){
         return principal.getName();
     }
+
+    public void sendBackToUser(){
+        String self = getNickname();
+        this.destination.setTarget(Destination.Target.USER);
+        this.destination.setTargetName(self);
+    }
 }

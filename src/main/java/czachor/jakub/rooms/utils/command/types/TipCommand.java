@@ -23,6 +23,7 @@ public class TipCommand extends Command {
         });
         Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         message.setLine(tip.toString());
+        helper.sendBackToUser();
         return message;
     }
 }

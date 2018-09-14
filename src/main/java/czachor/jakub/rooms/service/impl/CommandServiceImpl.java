@@ -40,7 +40,6 @@ public class CommandServiceImpl implements CommandService {
     private Command retrieveSpecificCommand(Message message) {
         String afterSlash = message.getLine().substring(1, detailsLoader.getIndexOfFirstSpaceOrEnd(message));
         List<String> details = detailsLoader.retrieveDetails(message);
-        String author = message.getFrom();
         switch (afterSlash.toLowerCase()) {
             case "tip":
             case "help":
