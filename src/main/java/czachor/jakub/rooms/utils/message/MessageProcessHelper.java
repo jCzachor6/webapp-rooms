@@ -10,19 +10,20 @@ import lombok.Setter;
 public class MessageProcessHelper {
     private WebsocketUser user;
     private String roomKey;
+    private String sessionId;
     @Setter
     private Destination destination;
 
-    public MessageProcessHelper(WebsocketUser user, String roomKey) {
+    public MessageProcessHelper(WebsocketUser user, String roomKey, String sessionId) {
         this.user = user;
         this.roomKey = roomKey;
+        this.sessionId = sessionId;
         //default message destination
         this.destination = new Destination(Destination.Target.ROOM, roomKey);
     }
 
     public void sendBackToUser(){
-        String self = user.getUsername();
         this.destination.setTarget(Destination.Target.USER);
-        this.destination.setTargetName(self);
+        this.destination.setTargetName(sessionId);
     }
 }

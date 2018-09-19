@@ -1,5 +1,6 @@
 package czachor.jakub.rooms.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -11,6 +12,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 @ComponentScan
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    final HttpHandshakeInterceptor interceptor;
+
+    @Autowired
+    public WebSocketConfig(HttpHandshakeInterceptor interceptor) {
+        this.interceptor = interceptor;
+    }
+
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -21,6 +29,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
+                .addInterceptors(interceptor)
                 .withSockJS();
     }
 }

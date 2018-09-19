@@ -12,7 +12,5 @@ public interface Consts {
     );
     String NEW_USER_NAME = "anon";
 
-    //session attribute names
-    String S_NICKNAME = "nickname";
-    String S_GENERATED = "isGenerated";
+    String SESSION_ID = "sessionId";
 }
