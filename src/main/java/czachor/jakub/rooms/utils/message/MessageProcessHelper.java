@@ -1,29 +1,27 @@
 package czachor.jakub.rooms.utils.message;
 
-import czachor.jakub.rooms.utils.CustomPrincipal;
+import czachor.jakub.rooms.utils.WebsocketUser;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
 @Getter
 public class MessageProcessHelper {
-    private CustomPrincipal principal;
+    private WebsocketUser user;
     private String roomKey;
     @Setter
     private Destination destination;
 
-    public MessageProcessHelper(CustomPrincipal principal, String roomKey) {
-        this.principal = principal;
+    public MessageProcessHelper(WebsocketUser user, String roomKey) {
+        this.user = user;
         this.roomKey = roomKey;
         //default message destination
         this.destination = new Destination(Destination.Target.ROOM, roomKey);
     }
 
-    public String getNickname(){
-        return principal.getName();
-    }
-
     public void sendBackToUser(){
-        String self = getNickname();
+        String self = user.getUsername();
         this.destination.setTarget(Destination.Target.USER);
         this.destination.setTargetName(self);
     }

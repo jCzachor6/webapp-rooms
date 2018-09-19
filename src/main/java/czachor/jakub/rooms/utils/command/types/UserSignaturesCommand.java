@@ -24,7 +24,7 @@ public class UserSignaturesCommand extends Command {
         List<Signature> signatures;
         String nickname;
         if (details.isEmpty()) {
-            nickname = helper.getNickname();
+            nickname = helper.getUser().getUsername();
         } else {
             nickname = details.get(0);
         }

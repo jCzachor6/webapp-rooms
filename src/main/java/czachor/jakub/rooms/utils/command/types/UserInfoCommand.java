@@ -23,7 +23,7 @@ public class UserInfoCommand extends Command {
     public Message process(MessageProcessHelper helper) {
         String nickname;
         if (details.isEmpty()) {
-            nickname = helper.getNickname();
+            nickname = helper.getUser().getUsername();
         } else {
             nickname = details.get(0);
         }

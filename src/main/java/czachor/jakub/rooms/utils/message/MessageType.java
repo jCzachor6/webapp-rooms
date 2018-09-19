@@ -11,7 +11,6 @@ public enum MessageType {
     LEAVE("#ffdedb"),
     COMMAND("#fcdbff"),
     SPECIAL("#fcffd6");
-
     @JsonProperty
     private String color;
 

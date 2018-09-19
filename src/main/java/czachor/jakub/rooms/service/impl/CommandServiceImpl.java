@@ -2,6 +2,7 @@ package czachor.jakub.rooms.service.impl;
 
 import czachor.jakub.rooms.dao.RoomDao;
 import czachor.jakub.rooms.dao.SignatureDao;
+import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
 import czachor.jakub.rooms.service.CommandService;
@@ -22,13 +23,15 @@ public class CommandServiceImpl implements CommandService {
     private final RoomDao roomDao;
     private final SignatureDao signatureDao;
     private final UserDao userDao;
+    private final StatisticsDao statisticsDao;
     private final MessageDetailsLoader detailsLoader;
 
     @Autowired
-    public CommandServiceImpl(RoomDao roomDao, SignatureDao signatureDao, UserDao userDao) {
+    public CommandServiceImpl(RoomDao roomDao, SignatureDao signatureDao, UserDao userDao, StatisticsDao statisticsDao) {
         this.roomDao = roomDao;
         this.signatureDao = signatureDao;
         this.userDao = userDao;
+        this.statisticsDao = statisticsDao;
         this.detailsLoader = new MessageDetailsLoader();
     }
 
@@ -63,7 +66,7 @@ public class CommandServiceImpl implements CommandService {
             case "connect":
             case "signin":
             case "sign_in":
-                return new ConnectCommand(details);
+                return new ConnectCommand(details, statisticsDao);
 /*            case "signatures":
             case "roomsignatures":
             case "room_signatures":
