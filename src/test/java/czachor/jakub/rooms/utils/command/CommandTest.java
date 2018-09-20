@@ -3,6 +3,7 @@ package czachor.jakub.rooms.utils.command;
 import czachor.jakub.rooms.exceptions.NotEnoughCommandParameters;
 import czachor.jakub.rooms.exceptions.TooManyCommandParameters;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,7 +20,7 @@ public class CommandTest {
         }
 
         @Override
-        public Message process(String from, String roomkey) {
+        public Message process(MessageProcessHelper helper) {
             return null;
         }
     }

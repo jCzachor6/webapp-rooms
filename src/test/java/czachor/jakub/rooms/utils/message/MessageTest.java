@@ -24,14 +24,13 @@ public class MessageTest {
 
     @Test
     public void jsonTest(){
-        Message message = new Message("author", "key", MessageType.COMMAND);
+        Message message = new Message("author", MessageType.COMMAND);
         message.setLine("text");
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonInString = mapper.writeValueAsString(message);
             assertTrue(jsonInString.contains("\"from\""));
             assertTrue(jsonInString.contains("\"line\""));
-            assertTrue(jsonInString.contains("\"roomKey\""));
             assertTrue(jsonInString.contains("\"type\""));
         } catch (JsonProcessingException e) {
             fail();
