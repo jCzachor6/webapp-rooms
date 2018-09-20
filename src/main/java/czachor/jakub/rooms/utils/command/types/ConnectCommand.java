@@ -35,9 +35,9 @@ public class ConnectCommand extends Command {
 
     private Message newNickname(MessageProcessHelper helper){
         String newNickname = details.get(0);
+        helper.getUser().changeUsername(newNickname);
         Message message = new Message(Consts.BOT_NAME, MessageType.JOIN);
         String line = helper.getUser().getUsername() + " changed his nickname to " + newNickname + ". ";
-        helper.getUser().changeUsername(newNickname);
         message.setLine(line);
         return message;
     }

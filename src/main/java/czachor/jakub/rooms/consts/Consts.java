@@ -11,6 +11,6 @@ public interface Consts {
             "/roll - get random value from 0-100. "
     );
     String NEW_USER_NAME = "anon";
-
+    String CHANGE_USER_NAME_REGEX = NEW_USER_NAME + "[0-9]*";
     String SESSION_ID = "sessionId";
 }

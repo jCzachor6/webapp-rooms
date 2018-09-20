@@ -19,6 +19,7 @@ public class EchoCommand extends Command {
         Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         String echo = "echo: " + details.get(0);
         message.setLine(echo);
+        helper.sendBackToUser();
         return message;
     }
 }
