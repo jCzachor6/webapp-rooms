@@ -10,13 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 public class Message {
     private String from;
     private String line;
-    private String roomKey;
     private MessageType type;
 
-    public Message(String from, String roomKey, MessageType type) {
+    public Message(String from, MessageType type) {
         this.line = "";
         this.from = from;
-        this.roomKey = roomKey;
         this.type = type;
     }
 

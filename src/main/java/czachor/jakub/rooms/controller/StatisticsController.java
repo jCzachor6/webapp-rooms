@@ -30,4 +30,10 @@ public class StatisticsController {
     ResponseEntity<List<StatisticsDTO>> getAllStatistics() {
         return new ResponseEntity<>(statisticsService.getAllStatistics(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/newuser", method = RequestMethod.GET)
+    ResponseEntity<String> getNewUsername(){
+        String username = statisticsService.generateUsername();
+        return new ResponseEntity<>(username, HttpStatus.OK);
+    }
 }

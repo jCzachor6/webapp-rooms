@@ -3,6 +3,7 @@
 var input;
 var stompClient = null;
 var currentSubscription = null;
+var selfSubscription = null;
 
 var nickname;
 var roomKey;
@@ -10,7 +11,6 @@ var roomKey;
 function init() {
     loadRoomKey();
     loadInput();
-    loadNickname();
     disconnect();
     connect();
 }
@@ -34,7 +34,13 @@ function connect() {
     stompClient.connect({}, onConnected, onError);
 }
 
+
 function onConnected() {
+    subscribeToRoom();
+    subscribeToSelf();
+}
+
+function subscribeToRoom() {
     if (currentSubscription) {
         currentSubscription.unsubscribe();
     }
@@ -43,11 +49,26 @@ function onConnected() {
     stompClient.send(topic, {}, JSON.stringify({from: nickname, line: '/connect', roomKey: roomKey}));
 }
 
+function subscribeToSelf() {
+    var client = new HttpClient();
+    client.get('http://localhost:8081/jczachor-web-app-rooms/session', function (response) {
+        var session = JSON.parse(response);
+        if (selfSubscription) {
+            selfSubscription.unsubscribe();
+        }
+        selfSubscription = stompClient.subscribe('/user/' + session.sessionId + '/room/' + roomKey, onMessageReceived);
+    });
+}
+
 function onError(error) {
+    var red = {
+        color: '#d11f1f'
+    };
     var message = {
-        line:'Could not connect to WebSocket server. Please refresh this page to try again!',
-        from:'error: ',
-        room:roomKey
+        line: 'Could not connect to WebSocket server. Please refresh this page to try again!',
+        from: 'error: ',
+        room: roomKey,
+        type: red
     };
     newMessage(message)
 }
@@ -69,7 +90,7 @@ function loadRoomKey() {
 
 function sendMessage(value) {
     var topic = '/app/chat/' + roomKey;
-    stompClient.send(topic, {}, JSON.stringify({from: nickname, line: value, roomKey: roomKey}));
+    stompClient.send(topic, {}, JSON.stringify({line: value, roomKey: roomKey}));
 }
 
 function loadInput() {
@@ -82,13 +103,5 @@ function loadInput() {
                 input.value = "";
             }
         }
-    });
-}
-
-function loadNickname() {
-    var client = new HttpClient();
-    client.get('http://localhost:8081/jczachor-web-app-rooms/stat/total', function (response) {
-        var stat = JSON.parse(response);
-        nickname = 'anon' + stat.value;
     });
 }

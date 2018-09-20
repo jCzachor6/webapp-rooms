@@ -6,6 +6,7 @@ import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
 import czachor.jakub.rooms.utils.message.Message;
+import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 import czachor.jakub.rooms.utils.message.MessageType;
 
 import java.util.List;
@@ -14,21 +15,20 @@ public class UserSignaturesCommand extends Command {
     private SignatureDao signatureDao;
 
     public UserSignaturesCommand(List<String> details, SignatureDao signatureDao) {
-        super(details);
-        setType(CommandType.USER_SIGNATURES);
+        super(CommandType.USER_SIGNATURES, details);
         this.signatureDao = signatureDao;
     }
 
     @Override
-    public Message process(String from, String roomkey) {
+    public Message process(MessageProcessHelper helper) {
         List<Signature> signatures;
         String nickname;
         if (details.isEmpty()) {
-            nickname = from;
+            nickname = helper.getUser().getUsername();
         } else {
             nickname = details.get(0);
         }
-        Message message = new Message(Consts.BOT_NAME, roomkey, MessageType.COMMAND);
+        Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         signatures = signatureDao.getSignaturesByUserNickname(nickname);
         if (signatures.isEmpty()) {
             message.setLine("User " + nickname + " didn't leave any signatures.");
