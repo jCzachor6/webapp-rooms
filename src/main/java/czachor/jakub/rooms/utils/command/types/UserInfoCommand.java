@@ -5,9 +5,7 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
@@ -20,7 +18,13 @@ public class UserInfoCommand extends Command {
     }
 
     @Override
-    public Message process(MessageProcessHelper helper) {
+    public List<Message> process(MessageProcessHelper helper) {
+        MessageBuilder builder =
+                new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.COMMAND)
+                .target(Destination.Target.USER)
+                .targetName(helper.getSessionId());
         String nickname;
         if (details.isEmpty()) {
             nickname = helper.getUser().getUsername();
@@ -28,12 +32,11 @@ public class UserInfoCommand extends Command {
             nickname = details.get(0);
         }
         User user = userDao.findUserByNickname(nickname);
-        Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         if (user != null) {
-            message.setLine(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints());
+            builder.line(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints());
         } else {
-            message.setLine("User \"" + details.get(0) + "\" does't exist. ");
+            builder.line("User \"" + details.get(0) + "\" does't exist. ");
         }
-        return message;
+        return builder.buildAsSingletonList();
     }
 }

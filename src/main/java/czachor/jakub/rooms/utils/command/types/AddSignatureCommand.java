@@ -14,7 +14,7 @@ public class AddSignatureCommand extends Command {
     }
 
     @Override
-    public Message process(MessageProcessHelper helper) {
+    public List<Message> process(MessageProcessHelper helper) {
         //TODO
         return null;
     }

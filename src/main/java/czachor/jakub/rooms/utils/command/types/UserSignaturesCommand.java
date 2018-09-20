@@ -5,9 +5,7 @@ import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
@@ -20,7 +18,13 @@ public class UserSignaturesCommand extends Command {
     }
 
     @Override
-    public Message process(MessageProcessHelper helper) {
+    public List<Message> process(MessageProcessHelper helper) {
+        MessageBuilder builder =
+                new MessageBuilder()
+                        .from(Consts.BOT_NAME)
+                        .type(MessageType.COMMAND)
+                        .target(Destination.Target.USER)
+                        .targetName(helper.getSessionId());
         List<Signature> signatures;
         String nickname;
         if (details.isEmpty()) {
@@ -28,17 +32,16 @@ public class UserSignaturesCommand extends Command {
         } else {
             nickname = details.get(0);
         }
-        Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
         signatures = signatureDao.getSignaturesByUserNickname(nickname);
         if (signatures.isEmpty()) {
-            message.setLine("User " + nickname + " didn't leave any signatures.");
+            builder.line("User " + nickname + " didn't leave any signatures.");
         } else {
             StringBuilder line = new StringBuilder(nickname + " signatures: \n");
             for (int i = 0; i < signatures.size(); i++) {
                 buildIndexedLine(line, i, signatures.get(i).getContent());
             }
-            message.setLine(line.toString());
+            builder.line(line.toString());
         }
-        return message;
+        return builder.buildAsSingletonList();
     }
 }

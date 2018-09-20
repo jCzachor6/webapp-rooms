@@ -4,41 +4,55 @@ import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
 public class ConnectCommand extends Command {
     private StatisticsDao statisticsDao;
+
     public ConnectCommand(List<String> details, StatisticsDao statisticsDao) {
         super(CommandType.CONNECT, details);
         this.statisticsDao = statisticsDao;
     }
 
     @Override
-    public Message process(MessageProcessHelper helper) {
-        if(details.isEmpty()){
+    public List<Message> process(MessageProcessHelper helper) {
+        if (details.isEmpty()) {
             return onEmptyDetails(helper);
-        }else{
+        } else {
             return newNickname(helper);
         }
     }
 
-    private Message onEmptyDetails(MessageProcessHelper helper){
-        Message message = new Message(Consts.BOT_NAME, MessageType.JOIN);
+    private List<Message> onEmptyDetails(MessageProcessHelper helper) {
         helper.getUser().generate(statisticsDao);
-        message.setLine("Hello there! " + helper.getUser().getUsername() + "\n Type '/help' to see possible commands. ");
-        return message;
+        MessageBuilder builder = new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.JOIN)
+                .target(Destination.Target.ROOM)
+                .targetName(helper.getRoomKey())
+                .line("Hello there! " + helper.getUser().getUsername() + "\n Type '/help' to see possible commands. ");
+        List<Message> messages = builder.buildAsSingletonList();
+        Message next = builder.target(Destination.Target.USER)
+                .targetName(helper.getSessionId())
+                .line("Type '/help' to see possible commands. ")
+                .build();
+
+        messages.add(next);
+        return messages;
     }
 
-    private Message newNickname(MessageProcessHelper helper){
+    private List<Message> newNickname(MessageProcessHelper helper) {
         String newNickname = details.get(0);
         helper.getUser().changeUsername(newNickname);
-        Message message = new Message(Consts.BOT_NAME, MessageType.JOIN);
         String line = helper.getUser().getUsername() + " changed his nickname to " + newNickname + ". ";
-        message.setLine(line);
-        return message;
+        return new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.JOIN)
+                .target(Destination.Target.ROOM)
+                .targetName(helper.getRoomKey())
+                .line(line)
+                .buildAsSingletonList();
     }
 }

@@ -33,5 +33,5 @@ public abstract class Command {
         builder.append("\n");
     }
 
-    public abstract Message process(MessageProcessHelper helper);
+    public abstract List<Message> process(MessageProcessHelper helper);
 }

@@ -3,9 +3,7 @@ package czachor.jakub.rooms.utils.command.types;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.message.*;
 import lombok.Getter;
 
 import java.util.List;
@@ -21,11 +19,16 @@ public class RollCommand extends Command {
     }
 
     @Override
-    public Message process(MessageProcessHelper helper) {
-        Message message = new Message(Consts.BOT_NAME, MessageType.SPECIAL);
+    public List<Message> process(MessageProcessHelper helper) {
         Random generator = new Random();
         this.rolled = generator.nextInt(max);
-        message.setLine("Rolled " + rolled + " out of " + max);
-        return message;
+        String line = helper.getUser().getUsername() + "rolled " + rolled + " out of " + max;
+        return new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.SPECIAL)
+                .target(Destination.Target.ROOM)
+                .targetName(helper.getRoomKey())
+                .line(line)
+                .buildAsSingletonList();
     }
 }
