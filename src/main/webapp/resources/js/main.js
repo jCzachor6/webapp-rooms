@@ -44,9 +44,7 @@ function subscribeToRoom() {
     if (currentSubscription) {
         currentSubscription.unsubscribe();
     }
-    var topic = '/app/chat/' + roomKey;
     currentSubscription = stompClient.subscribe('/room/' + roomKey, onMessageReceived);
-    stompClient.send(topic, {}, JSON.stringify({from: nickname, line: '/connect', roomKey: roomKey}));
 }
 
 function subscribeToSelf() {
@@ -57,6 +55,8 @@ function subscribeToSelf() {
             selfSubscription.unsubscribe();
         }
         selfSubscription = stompClient.subscribe('/user/' + session.sessionId + '/room/' + roomKey, onMessageReceived);
+        var topic = '/app/chat/' + roomKey;
+        stompClient.send(topic, {}, JSON.stringify({from: nickname, line: '/connect', roomKey: roomKey}));
     });
 }
 

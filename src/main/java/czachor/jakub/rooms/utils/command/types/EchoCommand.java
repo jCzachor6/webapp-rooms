@@ -14,7 +14,7 @@ public class EchoCommand extends Command {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {
-        String echo = "echo: " + details.get(0);
+        String echo = details.get(0);
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.COMMAND)

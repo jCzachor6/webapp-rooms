@@ -8,7 +8,8 @@ public interface Consts {
     List<String> WORKING_COMMANDS = Arrays.asList(
             "/help - show list of commands. ",
             "/echo \"text\" - get echo. ",
-            "/roll - get random value from 0-100. "
+            "/roll - get random value from 0-100. ",
+            "/connect \"newusername\" - change your username"
     );
     String NEW_USER_NAME = "anon";
     String CHANGE_USER_NAME_REGEX = NEW_USER_NAME + "[0-9]*";

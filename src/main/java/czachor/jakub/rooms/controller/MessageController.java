@@ -51,7 +51,9 @@ public class MessageController {
             sender.send(messages, roomKey);
         } else {
             Message message = new MessageBuilder()
-                    .orginal(original)
+                    .copyOf(original)
+                    .target(Destination.Target.ROOM)
+                    .targetName(roomKey)
                     .type(MessageType.NORMAL)
                     .from(user.getUsername())
                     .build();

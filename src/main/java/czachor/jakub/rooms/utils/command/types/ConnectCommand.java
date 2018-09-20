@@ -6,6 +6,7 @@ import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandType;
 import czachor.jakub.rooms.utils.message.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectCommand extends Command {
@@ -32,21 +33,21 @@ public class ConnectCommand extends Command {
                 .type(MessageType.JOIN)
                 .target(Destination.Target.ROOM)
                 .targetName(helper.getRoomKey())
-                .line("Hello there! " + helper.getUser().getUsername() + "\n Type '/help' to see possible commands. ");
+                .line("Hello there! " + helper.getUser().getUsername());
         List<Message> messages = builder.buildAsSingletonList();
-        Message next = builder.target(Destination.Target.USER)
+        Message secondMessage = builder.target(Destination.Target.USER)
                 .targetName(helper.getSessionId())
                 .line("Type '/help' to see possible commands. ")
+                .type(MessageType.COMMAND)
                 .build();
-
-        messages.add(next);
+        messages.add(secondMessage);
         return messages;
     }
 
     private List<Message> newNickname(MessageProcessHelper helper) {
         String newNickname = details.get(0);
-        helper.getUser().changeUsername(newNickname);
         String line = helper.getUser().getUsername() + " changed his nickname to " + newNickname + ". ";
+        helper.getUser().changeUsername(newNickname);
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.JOIN)

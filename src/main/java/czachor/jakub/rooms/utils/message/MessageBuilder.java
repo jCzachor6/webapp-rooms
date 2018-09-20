@@ -1,5 +1,6 @@
 package czachor.jakub.rooms.utils.message;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,10 +22,10 @@ public class MessageBuilder {
     }
 
     public List<Message> buildAsSingletonList() {
-        return Collections.singletonList(build());
+        return new ArrayList<>(Collections.singletonList(build()));
     }
 
-    public MessageBuilder orginal(Message message) {
+    public MessageBuilder copyOf(Message message) {
         from = Objects.toString(message.getFrom(), "");
         line = Objects.toString(message.getLine(), "");
         type = message.getType();

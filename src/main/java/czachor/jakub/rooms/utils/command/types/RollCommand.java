@@ -22,7 +22,7 @@ public class RollCommand extends Command {
     public List<Message> process(MessageProcessHelper helper) {
         Random generator = new Random();
         this.rolled = generator.nextInt(max);
-        String line = helper.getUser().getUsername() + "rolled " + rolled + " out of " + max;
+        String line = helper.getUser().getUsername() + " rolled " + rolled + " out of " + max;
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.SPECIAL)
