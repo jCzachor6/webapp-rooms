@@ -21,6 +21,24 @@ public class RollCommand extends Command {
     @Override
     public List<Message> process(MessageProcessHelper helper) {
         Random generator = new Random();
+        if (!details.isEmpty()) {
+            try {
+                int value = Integer.parseInt(details.get(0));
+                if (value < 0) {
+                    max = -value;
+                } else {
+                    max = value;
+                }
+            } catch (NumberFormatException e) {
+                return new MessageBuilder()
+                        .from(Consts.BOT_NAME)
+                        .type(MessageType.COMMAND)
+                        .target(Destination.Target.USER)
+                        .targetName(helper.getSessionId())
+                        .line("Bad input")
+                        .buildAsSingletonList();
+            }
+        }
         this.rolled = generator.nextInt(max);
         String line = helper.getUser().getUsername() + " rolled " + rolled + " out of " + max;
         return new MessageBuilder()
