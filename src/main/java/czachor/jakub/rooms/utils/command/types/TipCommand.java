@@ -2,14 +2,14 @@ package czachor.jakub.rooms.utils.command.types;
 
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
 public class TipCommand extends Command {
-    public TipCommand(List<String> details) {
-        super(CommandType.TIP, details);
+    public TipCommand(CommandDetailsLoader loader) {
+        super(1, loader);
     }
 
     @Override

@@ -22,6 +22,9 @@ public class CommandDetailsLoader {
         return picker;
     }
 
+    public DetailsPicker details(){
+        return picker;
+    }
 
     private void loadRestOfLine(String line) {
         int index = getIndexOfFirstSpaceOrEnd(line);
@@ -49,7 +52,7 @@ public class CommandDetailsLoader {
         }
     }
 
-    class DetailsPicker{
+    public class DetailsPicker{
         @Setter
         private int maxParams;
         private CommandDetailsLoader loader;

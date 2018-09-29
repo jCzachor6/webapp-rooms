@@ -2,7 +2,7 @@ package czachor.jakub.rooms.utils.command.types;
 
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 import lombok.Getter;
 
@@ -14,21 +14,17 @@ public class RollCommand extends Command {
     int max = 100;
     int rolled;
 
-    public RollCommand(List<String> details) {
-        super(CommandType.USER_SIGNATURES, details);
+    public RollCommand(CommandDetailsLoader loader) {
+        super(1, loader);
     }
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {
         Random generator = new Random();
-        if (!details.isEmpty()) {
+        if (!firstParam().equals("")) {
             try {
-                int value = Integer.parseInt(details.get(0));
-                if (value < 0) {
-                    max = -value;
-                } else {
-                    max = value;
-                }
+                int value = Integer.parseInt(firstParam());
+                max = (value < 0) ? -value : value;
             } catch (NumberFormatException e) {
                 return new MessageBuilder()
                         .from(Consts.BOT_NAME)
@@ -39,7 +35,7 @@ public class RollCommand extends Command {
                         .buildAsSingletonList();
             }
         }
-        this.rolled = generator.nextInt(max);
+        this.rolled = generator.nextInt(max) + 1;
         String line = helper.getUser().getUsername() + " rolled " + rolled + " out of " + max;
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)

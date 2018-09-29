@@ -3,23 +3,22 @@ package czachor.jakub.rooms.utils.command.types;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectCommand extends Command {
     private StatisticsDao statisticsDao;
 
-    public ConnectCommand(List<String> details, StatisticsDao statisticsDao) {
-        super(CommandType.CONNECT, details);
+    public ConnectCommand(CommandDetailsLoader loader, StatisticsDao statisticsDao) {
+        super(1, loader);
         this.statisticsDao = statisticsDao;
     }
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {
-        if (details.isEmpty()) {
+        if (firstParam().equals("")) {
             return onEmptyDetails(helper);
         } else {
             return newNickname(helper);
@@ -45,9 +44,8 @@ public class ConnectCommand extends Command {
     }
 
     private List<Message> newNickname(MessageProcessHelper helper) {
-        String newNickname = details.get(0);
-        String line = helper.getUser().getUsername() + " changed his nickname to " + newNickname + ". ";
-        helper.getUser().changeUsername(newNickname);
+        String line = helper.getUser().getUsername() + " changed his nickname to " + firstParam() + ". ";
+        helper.getUser().changeUsername(firstParam());
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.JOIN)

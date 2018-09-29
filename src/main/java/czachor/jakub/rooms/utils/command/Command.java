@@ -1,29 +1,40 @@
 package czachor.jakub.rooms.utils.command;
 
-import czachor.jakub.rooms.exceptions.NotEnoughCommandParameters;
-import czachor.jakub.rooms.exceptions.TooManyCommandParameters;
 import czachor.jakub.rooms.utils.message.Message;
 import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 
 import java.util.List;
 
 public abstract class Command {
-    private CommandType type;
-    protected List<String> details;
+    private CommandDetailsLoader loader;
+    private String firstParam;
+    private String secondParam;
+    private String lastParam;
 
-    public Command(CommandType type, List<String> details) {
-        this.details = details;
-        this.type = type;
-        this.throwOnExceedingParameters();
+    public Command(int maxParameters, CommandDetailsLoader loader) {
+        this.loader = loader;
+        this.loader.with(maxParameters);
     }
 
-    private void throwOnExceedingParameters(){
-        if(details.size()>type.getMaxParameters()){
-            throw new TooManyCommandParameters("This command requires maximum " + type.getMaxParameters() + " parameters");
+    protected String firstParam(){
+        if(this.firstParam == null){
+            this.firstParam = loader.details().pickFirst();
         }
-        if(details.size()<type.getMinParameters()){
-            throw new NotEnoughCommandParameters("This command requires minimum " + type.getMinParameters() + " parameters");
+        return this.firstParam;
+    }
+
+    protected String secondParam(){
+        if(this.secondParam == null){
+            this.secondParam = loader.details().pickSecond();
         }
+        return this.secondParam;
+    }
+
+    protected String lastParam(){
+        if(this.lastParam == null){
+            this.lastParam = loader.details().pickLast();
+        }
+        return this.lastParam;
     }
 
     protected void buildIndexedLine(StringBuilder builder, int index, String content) {

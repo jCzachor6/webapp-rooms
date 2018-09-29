@@ -4,7 +4,7 @@ import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
 public class AllUsersCommand extends Command {
     private final UserDao userDao;
 
-    public AllUsersCommand(List<String> details, UserDao userDao) {
-        super(CommandType.ALL_USERS, details);
+    public AllUsersCommand(CommandDetailsLoader loader, UserDao userDao) {
+        super(0, loader);
         this.userDao = userDao;
     }
 

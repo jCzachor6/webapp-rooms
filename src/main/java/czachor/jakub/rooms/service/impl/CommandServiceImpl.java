@@ -7,16 +7,14 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.exceptions.NoSuchCommandException;
 import czachor.jakub.rooms.service.CommandService;
 import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.command.types.ConnectCommand;
 import czachor.jakub.rooms.utils.command.types.EchoCommand;
 import czachor.jakub.rooms.utils.command.types.RollCommand;
 import czachor.jakub.rooms.utils.command.types.TipCommand;
 import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageDetailsLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service("commandService")
 public class CommandServiceImpl implements CommandService {
@@ -24,7 +22,6 @@ public class CommandServiceImpl implements CommandService {
     private final SignatureDao signatureDao;
     private final UserDao userDao;
     private final StatisticsDao statisticsDao;
-    private final MessageDetailsLoader detailsLoader;
 
     @Autowired
     public CommandServiceImpl(RoomDao roomDao, SignatureDao signatureDao, UserDao userDao, StatisticsDao statisticsDao) {
@@ -32,7 +29,6 @@ public class CommandServiceImpl implements CommandService {
         this.signatureDao = signatureDao;
         this.userDao = userDao;
         this.statisticsDao = statisticsDao;
-        this.detailsLoader = new MessageDetailsLoader();
     }
 
     @Override
@@ -41,16 +37,15 @@ public class CommandServiceImpl implements CommandService {
     }
 
     private Command retrieveSpecificCommand(Message message) {
-        String afterSlash = message.getLine().substring(1, detailsLoader.getIndexOfFirstSpaceOrEnd(message));
-        List<String> details = detailsLoader.retrieveDetails(message);
-        switch (afterSlash.toLowerCase()) {
+        CommandDetailsLoader loader = new CommandDetailsLoader(message.getLine());
+        switch (loader.getCommand().toLowerCase()) {
             case "tip":
             case "help":
             case "info":
             case "?":
             case "??":
             case "???":
-                return new TipCommand(details);
+                return new TipCommand(loader);
 /*            case "add":
             case "add_signature":
             case "addsignature":
@@ -66,7 +61,7 @@ public class CommandServiceImpl implements CommandService {
             case "connect":
             case "signin":
             case "sign_in":
-                return new ConnectCommand(details, statisticsDao);
+                return new ConnectCommand(loader, statisticsDao);
 /*            case "signatures":
             case "roomsignatures":
             case "room_signatures":
@@ -79,10 +74,10 @@ public class CommandServiceImpl implements CommandService {
             case "user_signatures":
                 return new UserSignaturesCommand(details, signatureDao);*/
             case "echo":
-                return new EchoCommand(details);
+                return new EchoCommand(loader);
             case "roll":
-                return new RollCommand(details);
+                return new RollCommand(loader);
         }
-        throw new NoSuchCommandException("Command \'" + afterSlash + "\' doesn't exist");
+        throw new NoSuchCommandException("Command \'" + loader.getCommand() + "\' doesn't exist");
     }
 }
