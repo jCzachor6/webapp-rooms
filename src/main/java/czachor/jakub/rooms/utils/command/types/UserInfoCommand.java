@@ -6,6 +6,7 @@ import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.command.Command;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class UserInfoCommand extends Command {
         if (user != null) {
             builder.line(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints());
         } else {
-            builder.line("User \"" + firstParam() + "\" does't exist. ");
+            builder.line("User " + StringUtils.wrap(firstParam(), '"') + " does't exist. ");
         }
         return builder.buildAsSingletonList();
     }
