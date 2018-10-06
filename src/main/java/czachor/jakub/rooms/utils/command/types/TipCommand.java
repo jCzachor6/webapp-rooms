@@ -1,16 +1,15 @@
 package czachor.jakub.rooms.utils.command.types;
 
 import czachor.jakub.rooms.consts.Consts;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class TipCommand extends Command {
-    public TipCommand(CommandDetailsLoader loader) {
-        super(1, loader);
-    }
+@Command(maxParameters = 0, name = "help")
+public class TipCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

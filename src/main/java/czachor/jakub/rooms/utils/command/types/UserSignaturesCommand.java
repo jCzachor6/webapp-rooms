@@ -3,19 +3,15 @@ package czachor.jakub.rooms.utils.command.types;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.models.Signature;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class UserSignaturesCommand extends Command {
-    private SignatureDao signatureDao;
-
-    public UserSignaturesCommand(CommandDetailsLoader loader, SignatureDao signatureDao) {
-        super(1, loader);
-        this.signatureDao = signatureDao;
-    }
+@Command(maxParameters = 1, name = "usersignatures", daos = {SignatureDao.class})
+public class UserSignaturesCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

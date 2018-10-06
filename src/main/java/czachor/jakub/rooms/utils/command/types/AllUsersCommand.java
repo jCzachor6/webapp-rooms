@@ -3,19 +3,15 @@ package czachor.jakub.rooms.utils.command.types;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class AllUsersCommand extends Command {
-    private final UserDao userDao;
-
-    public AllUsersCommand(CommandDetailsLoader loader, UserDao userDao) {
-        super(0, loader);
-        this.userDao = userDao;
-    }
+@Command(maxParameters = 0, name = "allusers", daos = {UserDao.class})
+public class AllUsersCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

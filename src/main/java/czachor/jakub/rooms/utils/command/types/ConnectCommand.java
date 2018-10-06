@@ -2,19 +2,15 @@ package czachor.jakub.rooms.utils.command.types;
 
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class ConnectCommand extends Command {
-    private StatisticsDao statisticsDao;
-
-    public ConnectCommand(CommandDetailsLoader loader, StatisticsDao statisticsDao) {
-        super(1, loader);
-        this.statisticsDao = statisticsDao;
-    }
+@Command(maxParameters = 1, name = "connect", daos = {StatisticsDao.class})
+public class ConnectCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

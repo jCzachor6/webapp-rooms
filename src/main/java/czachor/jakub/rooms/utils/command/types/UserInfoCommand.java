@@ -3,20 +3,16 @@ package czachor.jakub.rooms.utils.command.types;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class UserInfoCommand extends Command {
-    private final UserDao userDao;
-
-    public UserInfoCommand(CommandDetailsLoader loader, UserDao userDao) {
-        super(1, loader);
-        this.userDao = userDao;
-    }
+@Command(maxParameters = 1, name = "userinfo", daos = {UserDao.class})
+public class UserInfoCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

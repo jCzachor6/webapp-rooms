@@ -7,24 +7,16 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.Room;
 import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.models.User;
-import czachor.jakub.rooms.utils.command.Command;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
 import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class AddSignatureCommand extends Command {
-    private final SignatureDao signatureDao;
-    private final RoomDao roomDao;
-    private final UserDao userDao;
-
-    public AddSignatureCommand(CommandDetailsLoader loader, SignatureDao signatureDao, RoomDao roomDao, UserDao userDao) {
-        super(1, loader);
-        this.signatureDao = signatureDao;
-        this.roomDao = roomDao;
-        this.userDao = userDao;
-    }
+@Command(maxParameters = 1, name = "addsignature", daos = {RoomDao.class, SignatureDao.class, UserDao.class})
+public class AddSignatureCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {

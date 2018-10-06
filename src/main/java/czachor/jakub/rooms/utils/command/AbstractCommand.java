@@ -1,38 +1,40 @@
 package czachor.jakub.rooms.utils.command;
 
+import czachor.jakub.rooms.dao.RoomDao;
+import czachor.jakub.rooms.dao.SignatureDao;
+import czachor.jakub.rooms.dao.StatisticsDao;
+import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.utils.message.Message;
 import czachor.jakub.rooms.utils.message.MessageProcessHelper;
 
 import java.util.List;
 
-public abstract class Command {
-    private CommandDetailsLoader loader;
+public abstract class AbstractCommand  extends CommandFieldsLoader{
     private String firstParam;
     private String secondParam;
     private String lastParam;
-
-    public Command(int maxParameters, CommandDetailsLoader loader) {
-        this.loader = loader;
-        this.loader.with(maxParameters);
-    }
+    protected RoomDao roomDao;
+    protected SignatureDao signatureDao;
+    protected StatisticsDao statisticsDao;
+    protected UserDao userDao;
 
     protected String firstParam(){
         if(this.firstParam == null){
-            this.firstParam = loader.details().pickFirst();
+            this.firstParam = detailsLoader.details().pickFirst();
         }
         return this.firstParam;
     }
 
     protected String secondParam(){
         if(this.secondParam == null){
-            this.secondParam = loader.details().pickSecond();
+            this.secondParam = detailsLoader.details().pickSecond();
         }
         return this.secondParam;
     }
 
     protected String lastParam(){
         if(this.lastParam == null){
-            this.lastParam = loader.details().pickLast();
+            this.lastParam = detailsLoader.details().pickLast();
         }
         return this.lastParam;
     }
