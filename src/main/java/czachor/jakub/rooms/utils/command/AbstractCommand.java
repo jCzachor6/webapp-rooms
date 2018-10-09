@@ -1,5 +1,6 @@
 package czachor.jakub.rooms.utils.command;
 
+import czachor.jakub.rooms.config.ActiveUsers;
 import czachor.jakub.rooms.dao.RoomDao;
 import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.dao.StatisticsDao;
@@ -17,6 +18,7 @@ public abstract class AbstractCommand  extends CommandFieldsLoader{
     protected SignatureDao signatureDao;
     protected StatisticsDao statisticsDao;
     protected UserDao userDao;
+    protected ActiveUsers activeUsers;
 
     protected String firstParam(){
         if(this.firstParam == null){

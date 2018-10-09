@@ -38,7 +38,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
 
     @Bean
-    public Map<String, String> activeUsers(){
-        return new HashMap<>();
+    public ActiveUsers activeUsers(){
+        return new ActiveUsers();
     }
 }

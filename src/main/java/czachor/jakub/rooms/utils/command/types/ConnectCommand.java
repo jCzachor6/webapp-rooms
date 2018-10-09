@@ -1,15 +1,15 @@
 package czachor.jakub.rooms.utils.command.types;
 
+import czachor.jakub.rooms.config.ActiveUsers;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.utils.annotation.Command;
 import czachor.jakub.rooms.utils.command.AbstractCommand;
-import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-@Command(maxParameters = 1, name = "connect", daos = {StatisticsDao.class})
+@Command(maxParameters = 1, name = "connect", daos = {StatisticsDao.class, ActiveUsers.class})
 public class ConnectCommand extends AbstractCommand {
 
     @Override
@@ -22,7 +22,13 @@ public class ConnectCommand extends AbstractCommand {
     }
 
     private List<Message> onEmptyDetails(MessageProcessHelper helper) {
-        helper.getUser().generate(statisticsDao);
+        String username = activeUsers.getUsernameBySessionId(helper.getSessionId());
+        if(username == null){
+            helper.getUser().generate(statisticsDao);
+            activeUsers.putNewActiveUser(helper.getSessionId(), helper.getUser().getUsername());
+        }else{
+            helper.getUser().changeUsername(username, false);
+        }
         MessageBuilder builder = new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.JOIN)
@@ -41,7 +47,8 @@ public class ConnectCommand extends AbstractCommand {
 
     private List<Message> newNickname(MessageProcessHelper helper) {
         String line = helper.getUser().getUsername() + " changed his nickname to " + firstParam() + ". ";
-        helper.getUser().changeUsername(firstParam());
+        helper.getUser().changeUsername(firstParam(), true);
+        activeUsers.changeActiveUserUsername(helper.getSessionId(), firstParam());
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.JOIN)

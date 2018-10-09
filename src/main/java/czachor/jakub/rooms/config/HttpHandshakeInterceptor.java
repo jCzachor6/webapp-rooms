@@ -15,12 +15,6 @@ import java.util.Map;
 
 @Component
 public class HttpHandshakeInterceptor implements HandshakeInterceptor {
-    private final StatisticsService statisticsService;
-
-    @Autowired
-    public HttpHandshakeInterceptor(StatisticsService statisticsService) {
-        this.statisticsService = statisticsService;
-    }
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request,
@@ -41,6 +35,5 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
                                ServerHttpResponse serverHttpResponse,
                                WebSocketHandler webSocketHandler,
                                Exception e) {
-
     }
 }

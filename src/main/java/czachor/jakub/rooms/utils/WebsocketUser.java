@@ -17,8 +17,9 @@ public class WebsocketUser {
         this.generated = true;
     }
 
-    public void changeUsername(String newUsername) {
-        validateUsername(newUsername);
+    public void changeUsername(String newUsername, boolean validate) {
+        if (validate)
+            validateUsername(newUsername);
         this.username = newUsername;
         this.generated = false;
     }
