@@ -3,15 +3,10 @@ package czachor.jakub.rooms.utils;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.exceptions.UsernameNotAvailableException;
+import czachor.jakub.rooms.utils.annotation.SessionUser;
 import lombok.Data;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
 
-@Component(value = "user")
-@Scope(
-        scopeName = "websocket",
-        proxyMode = ScopedProxyMode.TARGET_CLASS)
+@SessionUser
 @Data
 public class WebsocketUser {
     private String username;
