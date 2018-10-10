@@ -10,5 +10,5 @@ public @interface Command {
 
     String name();
 
-    Class<?>[] daos() default {};
+    Class<?>[] beans() default {};
 }

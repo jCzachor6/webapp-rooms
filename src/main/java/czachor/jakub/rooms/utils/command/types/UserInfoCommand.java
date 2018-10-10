@@ -5,13 +5,12 @@ import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.annotation.Command;
 import czachor.jakub.rooms.utils.command.AbstractCommand;
-import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-@Command(maxParameters = 1, name = "userinfo", daos = {UserDao.class})
+@Command(maxParameters = 1, name = "userinfo", beans = {UserDao.class})
 public class UserInfoCommand extends AbstractCommand {
 
     @Override

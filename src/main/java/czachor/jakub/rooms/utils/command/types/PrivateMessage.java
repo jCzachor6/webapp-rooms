@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-@Command(maxParameters = 2, name = "pm", daos = {ActiveUsers.class})
+@Command(maxParameters = 2, name = "pm", beans = {ActiveUsers.class})
 public class PrivateMessage extends AbstractCommand {
     @Override
     public List<Message> process(MessageProcessHelper helper) {
@@ -37,13 +37,13 @@ public class PrivateMessage extends AbstractCommand {
     }
 
     private List<Message> sendPrivateMessage(MessageProcessHelper helper, String targetSessionId) {
+        List<Message> messages = new ArrayList<>(getMaxParameters());
         MessageBuilder builder = new MessageBuilder()
                 .from(helper.getUser().getUsername())
                 .target(Destination.Target.USER)
                 .targetName(targetSessionId)
                 .type(MessageType.PRIVATE)
                 .line(secondParam());
-        List<Message> messages = new ArrayList<>(2);
         messages.add(builder.build());
         Message self = builder.targetName(helper.getSessionId()).build();
         messages.add(self);

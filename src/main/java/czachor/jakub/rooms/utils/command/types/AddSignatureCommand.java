@@ -9,13 +9,12 @@ import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.models.User;
 import czachor.jakub.rooms.utils.annotation.Command;
 import czachor.jakub.rooms.utils.command.AbstractCommand;
-import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-@Command(maxParameters = 1, name = "addsignature", daos = {RoomDao.class, SignatureDao.class, UserDao.class})
+@Command(maxParameters = 1, name = "addsignature", beans = {RoomDao.class, SignatureDao.class, UserDao.class})
 public class AddSignatureCommand extends AbstractCommand {
 
     @Override

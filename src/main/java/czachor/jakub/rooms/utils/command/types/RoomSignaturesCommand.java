@@ -5,12 +5,11 @@ import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.models.Signature;
 import czachor.jakub.rooms.utils.annotation.Command;
 import czachor.jakub.rooms.utils.command.AbstractCommand;
-import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
 import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-@Command(maxParameters = 0, name = "roomsignatures", daos = {SignatureDao.class})
+@Command(maxParameters = 0, name = "roomsignatures", beans = {SignatureDao.class})
 public class RoomSignaturesCommand extends AbstractCommand {
 
     @Override

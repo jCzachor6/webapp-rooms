@@ -36,8 +36,8 @@ public class CommandsResolver{
     }
 
     private void writeDaoFields(AbstractCommand abstractCommand, Command command) throws IllegalAccessException {
-        for (int i = 0; i < command.daos().length; i++) {
-            String daoName = StringUtils.uncapitalize(command.daos()[i].getSimpleName());
+        for (int i = 0; i < command.beans().length; i++) {
+            String daoName = StringUtils.uncapitalize(command.beans()[i].getSimpleName());
             FieldUtils.writeField(abstractCommand, daoName, getDao(daoName), true);
         }
     }

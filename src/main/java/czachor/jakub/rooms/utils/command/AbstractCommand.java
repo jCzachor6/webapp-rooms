@@ -48,5 +48,9 @@ public abstract class AbstractCommand  extends CommandFieldsLoader{
         builder.append("\n");
     }
 
+    protected int getMaxParameters(){
+        return this.maxParameters;
+    }
+
     public abstract List<Message> process(MessageProcessHelper helper);
 }

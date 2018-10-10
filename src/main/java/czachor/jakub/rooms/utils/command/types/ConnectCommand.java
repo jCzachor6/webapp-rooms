@@ -9,7 +9,7 @@ import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-@Command(maxParameters = 1, name = "connect", daos = {StatisticsDao.class, ActiveUsers.class})
+@Command(maxParameters = 1, name = "connect", beans = {StatisticsDao.class, ActiveUsers.class})
 public class ConnectCommand extends AbstractCommand {
 
     @Override
