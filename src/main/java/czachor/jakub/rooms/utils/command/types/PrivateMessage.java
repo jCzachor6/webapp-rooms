@@ -1,6 +1,6 @@
 package czachor.jakub.rooms.utils.command.types;
 
-import czachor.jakub.rooms.config.ActiveUsers;
+import czachor.jakub.rooms.utils.ActiveUsers;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.utils.annotation.Command;
 import czachor.jakub.rooms.utils.command.AbstractCommand;
@@ -23,7 +23,7 @@ public class PrivateMessage extends AbstractCommand {
     }
 
     private String findUserSessionId(String username) {
-        return activeUsers.getSessionIdByUsername(username);
+        return getActiveUsers().getSessionIdByUsername(username);
     }
 
     private List<Message> sendUserNotFoundMessage(MessageProcessHelper helper) {

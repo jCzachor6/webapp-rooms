@@ -14,7 +14,7 @@ public class AllUsersCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {
-        List<User> users = userDao.getUsers();
+        List<User> users = getUserDao().getUsers();
         MessageBuilder messageBuilder = new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.COMMAND)

@@ -8,7 +8,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
@@ -34,7 +33,9 @@ public class CommandsConfig implements ApplicationContextAware {
         Reflections ref = new Reflections("czachor.jakub.rooms.utils.command.types");
         for (Class<?> c : ref.getTypesAnnotatedWith(Command.class)) {
             Command command = c.getAnnotation(Command.class);
-            commands.put(command.name(), (Class<? extends AbstractCommand>) c);
+            if(!c.isAnonymousClass()){
+                commands.put(command.name(), (Class<? extends AbstractCommand>) c);
+            }
         }
         return commands;
     }

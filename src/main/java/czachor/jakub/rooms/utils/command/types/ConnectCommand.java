@@ -1,6 +1,6 @@
 package czachor.jakub.rooms.utils.command.types;
 
-import czachor.jakub.rooms.config.ActiveUsers;
+import czachor.jakub.rooms.utils.ActiveUsers;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.utils.annotation.Command;
@@ -22,10 +22,10 @@ public class ConnectCommand extends AbstractCommand {
     }
 
     private List<Message> onEmptyDetails(MessageProcessHelper helper) {
-        String username = activeUsers.getUsernameBySessionId(helper.getSessionId());
+        String username = getActiveUsers().getUsernameBySessionId(helper.getSessionId());
         if(username == null){
-            helper.getUser().generate(statisticsDao);
-            activeUsers.putNewActiveUser(helper.getSessionId(), helper.getUser().getUsername());
+            helper.getUser().generate(getStatisticsDao());
+            getActiveUsers().putNewActiveUser(helper.getSessionId(), helper.getUser().getUsername());
         }else{
             helper.getUser().changeUsername(username, false);
         }
@@ -48,7 +48,7 @@ public class ConnectCommand extends AbstractCommand {
     private List<Message> newNickname(MessageProcessHelper helper) {
         String line = helper.getUser().getUsername() + " changed his nickname to " + firstParam() + ". ";
         helper.getUser().changeUsername(firstParam(), true);
-        activeUsers.changeActiveUserUsername(helper.getSessionId(), firstParam());
+        getActiveUsers().changeActiveUserUsername(helper.getSessionId(), firstParam());
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.JOIN)

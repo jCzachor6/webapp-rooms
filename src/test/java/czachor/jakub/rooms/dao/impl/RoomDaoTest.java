@@ -1,5 +1,6 @@
 package czachor.jakub.rooms.dao.impl;
 
+import czachor.jakub.rooms.config.CommandsConfig;
 import czachor.jakub.rooms.config.HibernateConfig;
 import czachor.jakub.rooms.dao.RoomDao;
 import czachor.jakub.rooms.models.Room;
@@ -18,10 +19,9 @@ import javax.transaction.Transactional;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(classes = {HibernateConfig.class})
 @WebAppConfiguration
 public class RoomDaoTest {
-
     @Autowired
     private RoomDao roomDao;
 

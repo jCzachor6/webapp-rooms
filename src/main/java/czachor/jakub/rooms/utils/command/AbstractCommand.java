@@ -1,12 +1,13 @@
 package czachor.jakub.rooms.utils.command;
 
-import czachor.jakub.rooms.config.ActiveUsers;
+import czachor.jakub.rooms.utils.ActiveUsers;
 import czachor.jakub.rooms.dao.RoomDao;
 import czachor.jakub.rooms.dao.SignatureDao;
 import czachor.jakub.rooms.dao.StatisticsDao;
 import czachor.jakub.rooms.dao.UserDao;
 import czachor.jakub.rooms.utils.message.Message;
 import czachor.jakub.rooms.utils.message.MessageProcessHelper;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -14,11 +15,12 @@ public abstract class AbstractCommand  extends CommandFieldsLoader{
     private String firstParam;
     private String secondParam;
     private String lastParam;
-    protected RoomDao roomDao;
-    protected SignatureDao signatureDao;
-    protected StatisticsDao statisticsDao;
-    protected UserDao userDao;
-    protected ActiveUsers activeUsers;
+
+    @Getter private RoomDao roomDao;
+    @Getter private SignatureDao signatureDao;
+    @Getter private StatisticsDao statisticsDao;
+    @Getter private UserDao userDao;
+    @Getter private ActiveUsers activeUsers;
 
     protected String firstParam(){
         if(this.firstParam == null){

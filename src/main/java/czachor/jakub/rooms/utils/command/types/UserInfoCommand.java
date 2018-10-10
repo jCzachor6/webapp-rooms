@@ -27,7 +27,7 @@ public class UserInfoCommand extends AbstractCommand {
         } else {
             nickname = firstParam();
         }
-        User user = userDao.findUserByNickname(nickname);
+        User user = getUserDao().findUserByNickname(nickname);
         if (user != null) {
             builder.line(user.getId() + ". " + user.getNickname() + ", points:" + user.getPoints());
         } else {

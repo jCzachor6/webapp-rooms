@@ -21,7 +21,7 @@ public class RoomSignaturesCommand extends AbstractCommand {
                         .target(Destination.Target.USER)
                         .targetName(helper.getSessionId());
         List<Signature> signatures;
-        signatures = signatureDao.getSignaturesByRoomKey(helper.getRoomKey());
+        signatures = getSignatureDao().getSignaturesByRoomKey(helper.getRoomKey());
         if (signatures.isEmpty()) {
             builder.line("Room has no signatures.");
         } else {

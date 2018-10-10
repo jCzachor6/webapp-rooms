@@ -1,4 +1,4 @@
-package czachor.jakub.rooms.config;
+package czachor.jakub.rooms.utils;
 
 import java.util.*;
 

@@ -27,7 +27,7 @@ public class UserSignaturesCommand extends AbstractCommand {
         } else {
             nickname = firstParam();
         }
-        signatures = signatureDao.getSignaturesByUserNickname(nickname);
+        signatures = getSignatureDao().getSignaturesByUserNickname(nickname);
         if (signatures.isEmpty()) {
             builder.line("User " + nickname + " didn't leave any signatures.");
         } else {

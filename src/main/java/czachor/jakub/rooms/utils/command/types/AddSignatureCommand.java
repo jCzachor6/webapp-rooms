@@ -19,17 +19,18 @@ public class AddSignatureCommand extends AbstractCommand {
 
     @Override
     public List<Message> process(MessageProcessHelper helper) {
-        Room room = roomDao.getRoomByKey(helper.getRoomKey());
+        Room room = getRoomDao().getRoomByKey(helper.getRoomKey());
         Signature signature = new Signature();
         signature.setContent(firstParam());
         signature.setRoom(room);
-        User user = userDao.findUserByNickname(helper.getUser().getUsername());
+        User user = getUserDao().findUserByNickname(helper.getUser().getUsername());
         if(user == null){
             user = new User();
             user.setNickname(helper.getUser().getUsername());
             user.setPoints(3);
-            userDao.addUser(user);
+            getUserDao().addUser(user);
         }
+        getSignatureDao().addSignature(signature);
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
                 .type(MessageType.COMMAND)
