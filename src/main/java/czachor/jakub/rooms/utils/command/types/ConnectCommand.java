@@ -1,44 +1,60 @@
 package czachor.jakub.rooms.utils.command.types;
 
+import czachor.jakub.rooms.utils.ActiveUsers;
 import czachor.jakub.rooms.consts.Consts;
 import czachor.jakub.rooms.dao.StatisticsDao;
-import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
+import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class ConnectCommand extends Command {
-    private StatisticsDao statisticsDao;
-    public ConnectCommand(List<String> details, StatisticsDao statisticsDao) {
-        super(CommandType.CONNECT, details);
-        this.statisticsDao = statisticsDao;
-    }
+@Command(maxParameters = 1, name = "connect", beans = {StatisticsDao.class, ActiveUsers.class})
+public class ConnectCommand extends AbstractCommand {
 
     @Override
-    public Message process(MessageProcessHelper helper) {
-        if(details.isEmpty()){
+    public List<Message> process(MessageProcessHelper helper) {
+        if (firstParam().equals("")) {
             return onEmptyDetails(helper);
-        }else{
+        } else {
             return newNickname(helper);
         }
     }
 
-    private Message onEmptyDetails(MessageProcessHelper helper){
-        Message message = new Message(Consts.BOT_NAME, MessageType.JOIN);
-        helper.getUser().generate(statisticsDao);
-        message.setLine("Hello there! " + helper.getUser().getUsername() + "\n Type '/help' to see possible commands. ");
-        return message;
+    private List<Message> onEmptyDetails(MessageProcessHelper helper) {
+        String username = getActiveUsers().getUsernameBySessionId(helper.getSessionId());
+        if(username == null){
+            helper.getUser().generate(getStatisticsDao());
+            getActiveUsers().putNewActiveUser(helper.getSessionId(), helper.getUser().getUsername());
+        }else{
+            helper.getUser().changeUsername(username, false);
+        }
+        MessageBuilder builder = new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.JOIN)
+                .target(Destination.Target.ROOM)
+                .targetName(helper.getRoomKey())
+                .line("Hello there! " + helper.getUser().getUsername());
+        List<Message> messages = builder.buildAsSingletonList();
+        Message secondMessage = builder.target(Destination.Target.USER)
+                .targetName(helper.getSessionId())
+                .line("Type '/help' to see possible commands. ")
+                .type(MessageType.COMMAND)
+                .build();
+        messages.add(secondMessage);
+        return messages;
     }
 
-    private Message newNickname(MessageProcessHelper helper){
-        String newNickname = details.get(0);
-        helper.getUser().changeUsername(newNickname);
-        Message message = new Message(Consts.BOT_NAME, MessageType.JOIN);
-        String line = helper.getUser().getUsername() + " changed his nickname to " + newNickname + ". ";
-        message.setLine(line);
-        return message;
+    private List<Message> newNickname(MessageProcessHelper helper) {
+        String line = helper.getUser().getUsername() + " changed his nickname to " + firstParam() + ". ";
+        helper.getUser().changeUsername(firstParam(), true);
+        getActiveUsers().changeActiveUserUsername(helper.getSessionId(), firstParam());
+        return new MessageBuilder()
+                .from(Consts.BOT_NAME)
+                .type(MessageType.JOIN)
+                .target(Destination.Target.ROOM)
+                .targetName(helper.getRoomKey())
+                .line(line)
+                .buildAsSingletonList();
     }
 }

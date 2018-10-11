@@ -1,6 +1,8 @@
 package czachor.jakub.rooms.config;
 
+import czachor.jakub.rooms.utils.ActiveUsers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -31,5 +33,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws")
                 .addInterceptors(interceptor)
                 .withSockJS();
+    }
+
+    @Bean
+    public ActiveUsers activeUsers(){
+        return new ActiveUsers();
     }
 }

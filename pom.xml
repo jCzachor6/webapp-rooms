@@ -7,7 +7,7 @@
     <groupId>czachor.jakub.rooms</groupId>
     <artifactId>rooms</artifactId>
     <packaging>war</packaging>
-    <version>0.1-BETA</version>
+    <version>0.3</version>
     <name>Rooms web app</name>
 
     <properties>
@@ -123,6 +123,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.2.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
         </dependency>
 
         <dependency>

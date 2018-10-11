@@ -10,42 +10,41 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class WebsocketUserTest {
-
     @Mock
     private StatisticsDao statisticsDao;
-    private WebsocketUser websocketUser;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        websocketUser = new WebsocketUser();
+        Statistics totalUsersJoined = mock(Statistics.class);
+        when(totalUsersJoined.getIntValue()).thenReturn(0);
+        when(statisticsDao.getTotalUsersJoinedStat()).thenReturn(totalUsersJoined);
     }
 
     @Test
     public void generateTest() {
-        Integer suffix = 0;
-        Statistics statistics = new Statistics();
-        statistics.setIntValue(suffix);
-        when(statisticsDao.getTotalUsersJoinedStat()).thenReturn(statistics);
+        WebsocketUser websocketUser = new WebsocketUser();
         websocketUser.generate(statisticsDao);
+        assertTrue(websocketUser.getUsername().contains(Consts.NEW_USER_NAME));
+        assertTrue(websocketUser.getUsername().contains(Integer.toString(0)));
         assertTrue(websocketUser.isGenerated());
-        String expected = Consts.NEW_USER_NAME + suffix;
-        assertEquals(expected, websocketUser.getUsername());
     }
 
     @Test
-    public void changeUsernameTest() {
-        websocketUser.changeUsername("username");
+    public void changeUsernameValidateTest() {
+        WebsocketUser websocketUser = new WebsocketUser();
+        websocketUser.changeUsername("newUsername", true);
         assertFalse(websocketUser.isGenerated());
-        assertEquals("username", websocketUser.getUsername());
+        assertEquals("newUsername", websocketUser.getUsername());
     }
 
     @Test(expected = UsernameNotAvailableException.class)
-    public void changeUsernameFailTest() {
-        String notAvailable = Consts.NEW_USER_NAME + "33";
-        websocketUser.changeUsername(notAvailable);
+    public void changeUsernameValidateFailTest() {
+        WebsocketUser websocketUser = new WebsocketUser();
+        websocketUser.changeUsername(Consts.NEW_USER_NAME+"32", true);
     }
 }

@@ -1,25 +1,34 @@
 package czachor.jakub.rooms.utils.command.types;
 
 import czachor.jakub.rooms.consts.Consts;
-import czachor.jakub.rooms.utils.command.Command;
-import czachor.jakub.rooms.utils.command.CommandType;
-import czachor.jakub.rooms.utils.message.Message;
-import czachor.jakub.rooms.utils.message.MessageProcessHelper;
-import czachor.jakub.rooms.utils.message.MessageType;
+import czachor.jakub.rooms.utils.annotation.Command;
+import czachor.jakub.rooms.utils.command.AbstractCommand;
+import czachor.jakub.rooms.utils.command.CommandDetailsLoader;
+import czachor.jakub.rooms.utils.message.*;
 
 import java.util.List;
 
-public class EchoCommand extends Command {
-    public EchoCommand(List<String> details) {
-        super(CommandType.ECHO, details);
-    }
+@Command(maxParameters = 1, name = "echo")
+public class EchoCommand extends AbstractCommand {
 
     @Override
-    public Message process(MessageProcessHelper helper) {
-        Message message = new Message(Consts.BOT_NAME, MessageType.COMMAND);
-        String echo = "echo: " + details.get(0);
-        message.setLine(echo);
-        helper.sendBackToUser();
-        return message;
+    public List<Message> process(MessageProcessHelper helper) {
+        if (firstParam().equals("")) {
+            return new MessageBuilder()
+                    .from(Consts.BOT_NAME)
+                    .type(MessageType.COMMAND)
+                    .target(Destination.Target.USER)
+                    .targetName(helper.getSessionId())
+                    .line("ECHO")
+                    .buildAsSingletonList();
+        } else {
+            return new MessageBuilder()
+                    .from(Consts.BOT_NAME)
+                    .type(MessageType.COMMAND)
+                    .target(Destination.Target.USER)
+                    .targetName(helper.getSessionId())
+                    .line(firstParam())
+                    .buildAsSingletonList();
+        }
     }
 }

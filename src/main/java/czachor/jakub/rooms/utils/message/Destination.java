@@ -1,10 +1,8 @@
 package czachor.jakub.rooms.utils.message;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class Destination {
     private Target target;
     private String targetName;
