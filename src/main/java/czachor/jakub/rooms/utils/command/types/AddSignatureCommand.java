@@ -30,6 +30,7 @@ public class AddSignatureCommand extends AbstractCommand {
             user.setPoints(3);
             getUserDao().addUser(user);
         }
+        signature.setUser(user);
         getSignatureDao().addSignature(signature);
         return new MessageBuilder()
                 .from(Consts.BOT_NAME)
