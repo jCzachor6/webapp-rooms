@@ -1,5 +1,4 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<h2>BETA 0.3</h2>
 <head>
     <meta charset="utf-8"/>
     <title>App</title>
@@ -12,13 +11,27 @@
 <body onload="init()">
 
 <div class="container">
+    <div class="tab">
+        <button class="tablinks active" onclick="">Global room</button>
+        <button class="tablinks" onclick="">Other</button>
+        <button class="tablinks" onclick="">Other2</button>
+        <button class="tablinks add" onclick="">Add</button>
+    </div>
     <div class="header">
-        <span th:text="${room.name}"></span>
+        Room name
     </div>
     <div class="chat-container">
         <ul class="chat" id="chat"></ul>
     </div>
     <input type="text" placeholder="Type text & hit enter" maxlength="100" id="input">
+    <div class="btn-send">
+        <button onclick="">Send</button>
+    </div>
+</div>
+<div class="footer">
+    <p>made by tyry</p>
+    <p>version 0.3</p>
+    <p>github link</p>
 </div>
 
 </body>

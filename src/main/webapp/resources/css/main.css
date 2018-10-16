@@ -1,38 +1,32 @@
 body {
-    background-color: gray;
-    color: white;
+    background-color: #303030;
     font-family: sans-serif;
 }
 
 .container {
-    width: 580px;
-    max-height: 930px;
-    background-color: rgb(90, 90, 100);
-    margin-left: 50vw;
-    margin-top: 10vh;
-    transform: translateX(-50%);
+    width: 60%;
+    margin: 0 auto;
 }
 
 .header {
-    width: 560px;
-    background-color: #352466;
-    padding: 10px;
+    width: 100%;
+    background-color: #f1f1f1;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-align: center;
     font-weight: 500;
 }
 
 .chat-container {
-    width: 580px;
-    max-height: 863px;
-    min-height: 600px;
+    width: 100%;
+    max-height: 70%;
+    min-height: 70%;
     text-align: center;
     overflow-y: auto;
     background-color: #444444;
 }
 
 .chat {
-    position: relative;
-    left: -30px;
     list-style: none;
     text-align: left;
 }
@@ -45,10 +39,63 @@ p {
     margin: 0;
 }
 
-input {
-    position: absolute;
-    width: 576px;
-    padding: 5px 0;
+.container input {
+    min-width: 90%;
+    max-width: 90%;
     border-radius: 0;
     background-color: white;
+    float: left;
+}
+
+.btn-send button {
+    min-width: 10%;
+    max-width: 10%;
+    float: right;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tab button.add {
+    background-color: darkred;
+}
+
+.footer{
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p {
+    display: inline-block;
+    max-width: fit-content;
+    border-radius: 20px;
+    padding: 3px 10px;
+    margin: 5px;
+    background-color: white;
+    font-size: 10px;
 }
